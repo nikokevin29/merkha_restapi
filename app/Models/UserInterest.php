@@ -12,7 +12,7 @@ class UserInterest extends Model
     public $timestamps = false;
     protected $fillable = [
         'id_user',
-        'id_product',
+        'id_category',
     ];
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',

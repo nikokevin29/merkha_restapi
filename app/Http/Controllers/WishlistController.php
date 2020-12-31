@@ -36,7 +36,7 @@ class WishlistController extends Controller
         $id = Auth::user()->id;//get id login
         $input['id_user'] = $id;
         $data = Wishlist::create($input);
-        return ResponseFormatter::success($data,'Wishlish Added');
+        return ResponseFormatter::success($data,'Wishlist Added');
     }
     public function delete(Wishlist $id){
         

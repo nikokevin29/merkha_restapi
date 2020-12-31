@@ -12,6 +12,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\UserInterestController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,6 +43,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('user', [UserController::class ,'updateProfile']);
     Route::post('user/photo', [UserController::class ,'updatePhoto']);
     Route::post('logout', [UserController::class ,'logout']);
+    Route::post('user/interest/{value}', [UserInterestController::class ,'add_user_interest']);
     
 
     //Address

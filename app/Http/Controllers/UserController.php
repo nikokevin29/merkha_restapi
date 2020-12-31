@@ -49,10 +49,23 @@ class UserController extends Controller
                 'url_photo'         => 'nullable',
             ]);
             if($validator->fails()){
-                return ResponseFormatter::error([
-                    'message' => 'Something went wrong',
-                    'error' => $validator->errors(),
-                ],'Authentication Failed', 500);
+                if($validator->errors()->first('username') && $validator->errors()->first('email')){
+                    return ResponseFormatter::error([
+                        'message' => 'Validator Failed',
+                        'error'   => $validator->errors(),
+                    ],'Username and Email has already been taken.', 500);
+                }else if($validator->errors()->first('username')){
+                    return ResponseFormatter::error([
+                        'message' => 'Validator Failed',
+                        'error'   => $validator->errors(),
+                    ],'Username has already been taken.', 500);
+                }else if ($validator->errors()->first('email')){
+                    return ResponseFormatter::error([
+                        'message' => 'Validator Failed',
+                        'error'   => $validator->errors(),
+                    ],'Email has already been taken.', 500);
+                }
+                
             }
             
             $user = User::create([
@@ -158,7 +171,6 @@ class UserController extends Controller
             'address'           =>$data->getAddress,
         ]);
         return ResponseFormatter::success($getAll,'Success Get Profile Data');
-
     }
     
 }
