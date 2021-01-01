@@ -10,6 +10,9 @@ use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ResetPasswordRequest;
+use Illuminate\Support\Facades\Password;
+use App\Helpers\ApiCode;
 
 class UserController extends Controller
 {
@@ -171,6 +174,35 @@ class UserController extends Controller
             'address'           =>$data->getAddress,
         ]);
         return ResponseFormatter::success($getAll,'Success Get Profile Data');
+    }
+
+    public function forgot(Request $request) {
+        $credentials = request()->validate(['email' => 'required|email']);
+        //check email found in database
+        $email = User::where('email',$request->email)->first();
+        if(empty($email)){
+            return ResponseFormatter::error([
+                'message' => 'Email Not Found in Database',
+                'error' => $email,
+            ],'Email Not Found', 422);
+        }
+        Password::sendResetLink($credentials);
+        return ResponseFormatter::success(null,'Reset password link sent on your email id.');
+    }
+
+    public function reset(ResetPasswordRequest $request) {
+        $reset_password_status = Password::reset($request->validated(), function ($user, $password) {
+            $user->password = $password;
+            $user->save();
+        });
+
+        if ($reset_password_status == Password::INVALID_TOKEN) {
+            return ResponseFormatter::error([
+                'message' => 'Invalid Reset Password Token',
+                'error'   => Password::INVALID_TOKEN,
+            ],'Reset Password Failed', 500);
+        }
+        return ResponseFormatter::success(null,'Password has been successfully changed');
     }
     
 }

@@ -11,4 +11,10 @@ class OrderDetail extends Model
     
     public $timestamps = false;
     protected $table = 'order_detail';
+    protected $fillable = [
+        'id_order',
+        'id_product',
+        'amount',
+        'subtotal',
+    ];
 }

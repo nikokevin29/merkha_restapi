@@ -38,6 +38,9 @@ class Order extends Model
     public function getAddress(){
         return $this->hasMany(Address::class,'id_user','id_buyer');
     }
+    public function getDetails(){
+        return $this->hasMany(OrderDetail::class,'id_order','id');
+    }
 
 
 }

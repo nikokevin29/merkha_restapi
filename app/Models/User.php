@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\ApiCode;
+use Hash;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable;
@@ -36,6 +38,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'updated_at'        => 'datetime:Y-m-d H:i:s',
         'email_verified_at' => 'datetime:Y-m-d H:i:s',
     ];
+
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
     public function getAddress(){
         return $this->hasMany(Address::class,'id_user');

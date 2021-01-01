@@ -28,6 +28,8 @@ use App\Http\Controllers\UserInterestController;
 Route::post('login', [UserController::class ,'login']);
 Route::post('register', [UserController::class ,'register']);
 
+Route::post('password/email', [UserController::class, 'forgot']);
+Route::post('password/reset', [UserController::class ,'reset']);
 
 
 Route::get('/email/resend', [VerificationController::class,'resend'])->name('verification.resend');//need bearer register
@@ -44,6 +46,8 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('user/photo', [UserController::class ,'updatePhoto']);
     Route::post('logout', [UserController::class ,'logout']);
     Route::post('user/interest/{value}', [UserInterestController::class ,'add_user_interest']);
+
+
     
 
     //Address
@@ -70,7 +74,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('merchant/showbyrandom/{limit}',[MerchantController::class,'showByRandom']);
     Route::get('merchant/showbyid/{id}',[MerchantController::class,'showById']);
 
-    //Transaction
+    //Order
     Route::get('order/show',[OrderController::class,'showOrderbyUserLogin']);
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
 
