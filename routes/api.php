@@ -45,10 +45,9 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('user', [UserController::class ,'updateProfile']);
     Route::post('user/photo', [UserController::class ,'updatePhoto']);
     Route::post('logout', [UserController::class ,'logout']);
+
     Route::post('user/interest/{value}', [UserInterestController::class ,'add_user_interest']);
-
-
-    
+    Route::get('user/interest/show', [UserInterestController::class ,'show_user_interest']);
 
     //Address
     Route::get('user/addressall',[AddressController::class,'index']);

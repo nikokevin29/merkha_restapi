@@ -76,11 +76,12 @@ class UserController extends Controller
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'username' => $request->username,
-                'password' => Hash::make($request->password),
+                'password' => $request->password,
                 'gender' => $request->gender,
                 'phone_number' => $request->phone_number,
                 'url_photo' => $request->url_photo,
             ]);
+            Hash::make($user['password']);
             $user = User::where('email', $request->email)->first();
             $tokenResult =  $user->createToken('nApp')->accessToken;
 

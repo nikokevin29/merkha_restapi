@@ -21,10 +21,26 @@ class CreateMerchantTable extends Migration
             $table->foreignId('id_merchant_category')->constrained('merchant_category');
             $table->string('merchant_id');
             $table->string('name');
-            $table->longText('address');
-            $table->string('city');
-            $table->string('email');
-            $table->string('phone_number');
+            $table->string('merchant_logo')->nullable();
+            $table->string('description')->nullable();
+            $table->string('website')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
+            
+            $table->string('street')->nullable();
+            $table->string('district')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('timezone')->nullable();
+            $table->string('longlat')->nullable();
+            
+            $table->string('mall')->nullable();
+            $table->string('building_name')->nullable();
+            $table->string('floor')->nullable();
+            $table->string('other_notes')->nullable();
+            
             $table->string('status');
             $table->timestamps();
         });

@@ -35,7 +35,7 @@ class AddressController extends Controller
         'province'          => 'required',
         ]);
         if ($validator->fails()) {
-            return ResponseFormatter::error(['error'=>$validator->errors()], 'Register Failed', 401);     
+            return ResponseFormatter::error(['error'=>$validator->errors()], 'Address Failed', 401);     
         }
         
         $input['id_user'] = $iduser;
@@ -63,9 +63,10 @@ class AddressController extends Controller
         }
 
         $input['id_user'] = Auth::user()->id;
+        $input['id'] = $id;
         $data = Address::where('id',$id)->update($input);
 
-        return ResponseFormatter::success($data,'Address Updated');
+        return ResponseFormatter::success($input,'Address Updated');
     }
 
     public function destroy(Address $id)

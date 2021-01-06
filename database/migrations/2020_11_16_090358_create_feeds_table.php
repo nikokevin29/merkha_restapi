@@ -23,6 +23,7 @@ class CreateFeedsTable extends Migration
             $table->string('url_image');
             $table->longText('caption');
             $table->string('location')->nullable();
+            $table->integer('report_count')->default(0);
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

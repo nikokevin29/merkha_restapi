@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductCategoryController extends Controller
 {
     public function show(){
-        return ResponseFormatter::success(ProductCategory::all(),'Show All Product');
+        return ResponseFormatter::success(ProductCategory::all(),'Show All Category');
     }
     public function showNameOnly(){
         $datas = ProductCategory::all();

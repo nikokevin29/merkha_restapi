@@ -19,4 +19,21 @@ class UserInterestController extends Controller
         $data = UserInterest::create($input);
         return ResponseFormatter::success($data,'Category '.$value.' Added');
     }
+    public function show_user_interest(Request  $request){
+        $user = Auth::user()->id;
+        $datas = UserInterest::all()->where('id_user',$user);
+        $getAll = [];
+        foreach($datas as $data){
+            $d = [];
+            foreach($data->getCategory as $keys => $get) {
+                $d[$keys] = $get;
+            }
+            array_push($getAll,[
+                'id_category'  =>$data->id_category,
+                'category'     =>$get->category_name,
+                'url_icon'     =>$get->url_icon,
+            ]);
+        }
+        return ResponseFormatter::success($getAll,'User Interest Showed');
+    }
 }

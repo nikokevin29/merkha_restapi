@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->string('size')->nullable();
             $table->integer('stock');
             $table->float('weight');
+            $table->integer('report_count')->default(0);
             $table->timestamps();
 
         });
