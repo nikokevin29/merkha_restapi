@@ -21,9 +21,10 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
+                'id'            =>$data->id,
                 'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
                 'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
                 'product_name'  =>$data->product_name,
                 'description'   =>$data->description,
                 'price'         =>$data->price,
@@ -33,7 +34,9 @@ class ProductController extends Controller
                 'weight'        =>$data->weight,
                 'created_at'    =>$data->created_at,
                 'updated_at'    =>$data->updated_at,
-                'photo'         =>$photo
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ??'',
+                'photo'         =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show All Product');
@@ -49,9 +52,10 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'category'   =>$data->getCategory->category_name,
-                'merchant'   =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
+                'id'            =>$data->id,
+                'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
+                'merchant'      =>$data->getMerchant->name,
                 'product_name'  =>$data->product_name,
                 'description'   =>$data->description,
                 'price'         =>$data->price,
@@ -61,7 +65,9 @@ class ProductController extends Controller
                 'weight'        =>$data->weight,
                 'created_at'    =>$data->created_at,
                 'updated_at'    =>$data->updated_at,
-                'photo'         =>$photo
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ?? '',
+                'photo'         =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show Product By id '.$id.' Success');
@@ -77,9 +83,10 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
+                'id'            =>$data->id,
                 'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
                 'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
                 'product_name'  =>$data->product_name,
                 'description'   =>$data->description,
                 'price'         =>$data->price,
@@ -89,7 +96,9 @@ class ProductController extends Controller
                 'weight'        =>$data->weight,
                 'created_at'    =>$data->created_at,
                 'updated_at'    =>$data->updated_at,
-                'photo'         =>$photo
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ??'',
+                'photo'         =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show All Product By Limit Discover');
@@ -105,9 +114,10 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
+                'id'            =>$data->id,
                 'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
                 'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
                 'product_name'  =>$data->product_name,
                 'description'   =>$data->description,
                 'price'         =>$data->price,
@@ -117,7 +127,9 @@ class ProductController extends Controller
                 'weight'        =>$data->weight,
                 'created_at'    =>$data->created_at,
                 'updated_at'    =>$data->updated_at,
-                'photo'         =>$photo
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ??'',
+                'photo'         =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show Product By Merchant '.$id);
@@ -133,9 +145,10 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
+                'id'            =>$data->id,
                 'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
                 'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
                 'product_name'  =>$data->product_name,
                 'description'   =>$data->description,
                 'price'         =>$data->price,
@@ -145,7 +158,9 @@ class ProductController extends Controller
                 'weight'        =>$data->weight,
                 'created_at'    =>$data->created_at,
                 'updated_at'    =>$data->updated_at,
-                'photo'         =>$photo
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ??'',
+                'photo'         =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show By Order '.$order.' Limit By '.$limit);
@@ -167,9 +182,10 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
+                'id'            =>$data->id,
                 'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
                 'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
                 'product_name'  =>$data->product_name,
                 'description'   =>$data->description,
                 'price'         =>$data->price,
@@ -179,7 +195,9 @@ class ProductController extends Controller
                 'weight'        =>$data->weight,
                 'created_at'    =>$data->created_at,
                 'updated_at'    =>$data->updated_at,
-                'photo'         =>$photo
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ??'',
+                'photo'         =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show Best Seller Limit By '.$limit);
