@@ -68,10 +68,13 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('product/showdiscover/{limit}',[ProductController::class,'showDiscover']);
     Route::get('product/showbyorder/{limit}/{order}',[ProductController::class,'showByOrder']);//(order) asc : desc
     Route::get('product/showbybestseller/{limit}',[ProductController::class,'showByBestseller']);
+    Route::get('product/searchbyproduct/{productName}',[ProductController::class,'searchByProductName']);
+
     
     //Merchant
     Route::get('merchant/showbyrandom/{limit}',[MerchantController::class,'showByRandom']);
     Route::get('merchant/showbyid/{id}',[MerchantController::class,'showById']);
+    Route::get('product/searchbymerchant/{merchantName}',[MerchantController::class,'searchByMerchantName']);
 
     //Order
     Route::get('order/show',[OrderController::class,'showOrderbyUserLogin']);

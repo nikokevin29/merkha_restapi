@@ -202,4 +202,35 @@ class ProductController extends Controller
         }   
         return ResponseFormatter::success($getAll,'Show Best Seller Limit By '.$limit);
     }
+    public function searchByProductName($productName){
+        $datas = Product::query()->where('product_name','like','%'.$productName.'%')->get();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            //get Array Photo
+            $photo = [];
+            foreach($data->getPhoto as $keys => $getPhotos) {
+                $photo[$keys] = $getPhotos->url_photo;
+            }
+            array_push($getAll,[
+                'id'            =>$data->id,
+                'category'      =>$data->getCategory->category_name,
+                'merchant_id'   =>$data->getMerchant->id,
+                'merchant'      =>$data->getMerchant->name,
+                'product_name'  =>$data->product_name,
+                'description'   =>$data->description,
+                'price'         =>$data->price,
+                'color'         =>$data->color,
+                'size'          =>$data->size,
+                'stock'         =>$data->stock,
+                'weight'        =>$data->weight,
+                'created_at'    =>$data->created_at,
+                'updated_at'    =>$data->updated_at,
+                'report_count'  =>$data->report_count,
+                'preview'       =>$getPhotos->url_photo ??'',
+                'photo'         =>$photo,
+                ]);
+        }
+        return ResponseFormatter::success($getAll,'Seach By Product Name '.$productName);
+    }
 }
