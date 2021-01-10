@@ -21,22 +21,25 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ??'',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show All Product');
@@ -52,22 +55,25 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ?? '',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show Product By id '.$id.' Success');
@@ -83,22 +89,25 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ??'',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show All Product By Limit Discover');
@@ -114,22 +123,25 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ??'',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show Product By Merchant '.$id);
@@ -145,22 +157,25 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ??'',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show By Order '.$order.' Limit By '.$limit);
@@ -182,22 +197,25 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ??'',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }   
         return ResponseFormatter::success($getAll,'Show Best Seller Limit By '.$limit);
@@ -213,24 +231,61 @@ class ProductController extends Controller
                 $photo[$keys] = $getPhotos->url_photo;
             }
             array_push($getAll,[
-                'id'            =>$data->id,
-                'category'      =>$data->getCategory->category_name,
-                'merchant_id'   =>$data->getMerchant->id,
-                'merchant'      =>$data->getMerchant->name,
-                'product_name'  =>$data->product_name,
-                'description'   =>$data->description,
-                'price'         =>$data->price,
-                'color'         =>$data->color,
-                'size'          =>$data->size,
-                'stock'         =>$data->stock,
-                'weight'        =>$data->weight,
-                'created_at'    =>$data->created_at,
-                'updated_at'    =>$data->updated_at,
-                'report_count'  =>$data->report_count,
-                'preview'       =>$getPhotos->url_photo ??'',
-                'photo'         =>$photo,
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
                 ]);
         }
         return ResponseFormatter::success($getAll,'Seach By Product Name '.$productName);
+    }
+    public function showById($id){
+        $product = Product::where('id',$id)->get();
+        $getAll = [];
+        foreach($product as $data)
+        {
+            //get Array Photo
+            $photo = [];
+            foreach($data->getPhoto as $keys => $getPhotos) {
+                $photo[$keys] = $getPhotos->url_photo;
+            }
+            array_push($getAll,[
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
+                ]);
+        }   
+        return ResponseFormatter::success($getAll,'Show By Id '.$id);
     }
 }

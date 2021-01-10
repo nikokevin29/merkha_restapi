@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('product/showbyorder/{limit}/{order}',[ProductController::class,'showByOrder']);//(order) asc : desc
     Route::get('product/showbybestseller/{limit}',[ProductController::class,'showByBestseller']);
     Route::get('product/searchbyproduct/{productName}',[ProductController::class,'searchByProductName']);
+    Route::get('product/showbyid/{id}',[ProductController::class,'showById']);
 
     
     //Merchant

@@ -21,4 +21,13 @@ class Wishlist extends Model
     public function getProduct(){
         return $this->hasMany(Product::class,'id','id_product');
     }
+    public function getCategory(){
+        return $this->hasOne(ProductCategory::class,'id','id_category');
+    }
+    public function getMerchant(){
+        return $this->hasOne(Merchant::class,'id','id_merchant');
+    }
+    public function getPhoto(){
+        return $this->hasMany(ProductPhoto::class,'id_product','id');
+    }
 }
