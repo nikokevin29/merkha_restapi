@@ -33,6 +33,8 @@ class AddressController extends Controller
         'postal_code'       => 'required',
         'city'              => 'required',
         'province'          => 'required',
+        'id_city'           => 'required',
+        'id_province'       => 'required',
         ]);
         if ($validator->fails()) {
             return ResponseFormatter::error(['error'=>$validator->errors()], 'Address Failed', 401);     
@@ -57,6 +59,8 @@ class AddressController extends Controller
             'postal_code'       => 'required',
             'city'              => 'required',
             'province'          => 'required',
+            'id_city'           => 'required',
+            'id_province'       => 'required',
         ]);
         if ($validator->fails()) {
             return ResponseFormatter::error(['error'=>$validator->errors()], 'Update Failed', 401);     

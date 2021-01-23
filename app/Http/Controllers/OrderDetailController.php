@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Models\OrderDetail;
+
 class OrderDetailController extends Controller
 {
-    public function createDetailOrder(){
-        $detail = Order::create([
-            'id_order'    => $request->id_order,
-            'id_product'  => $request->id_product,
-            'amount'      => $request->amount,
-            'subtotal'    => $request->subtotal,
-        ]);
-        return ResponseFormatter::success($detail,'Detail Created');
+    public function createDetailOrder(Request $request){
+        $input = $request->all();
+        return ResponseFormatter::success(OrderDetail::create($input),'Detail Created');
     }
-    
+
+    public function showDetailOrder($id_order){
+        return ResponseFormatter::success(OrderDetail::where('id_order',$id_order)->get(),'Detail Created');
+    }
+
 }

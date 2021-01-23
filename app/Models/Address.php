@@ -16,6 +16,8 @@ class Address extends Model
         'postal_code',
         'city',
         'province',
+        'id_city',
+        'id_province',
     ];
 
     protected $casts = [

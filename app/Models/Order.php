@@ -36,10 +36,13 @@ class Order extends Model
     // }
 
     public function getAddress(){
-        return $this->hasMany(Address::class,'id_user','id_buyer');
+        return $this->belongsTo(Address::class,'id_buyer','id_user');
     }
     public function getDetails(){
         return $this->hasMany(OrderDetail::class,'id_order','id');
+    }
+    public function getMerchant(){
+        return $this->belongsTo(Merchant::class,'id_merchant','id');
     }
 
 

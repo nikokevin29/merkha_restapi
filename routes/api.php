@@ -13,6 +13,8 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\UserInterestController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\FeedController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -71,7 +73,6 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('product/searchbyproduct/{productName}',[ProductController::class,'searchByProductName']);
     Route::get('product/showbyid/{id}',[ProductController::class,'showById']);
 
-    
     //Merchant
     Route::get('merchant/showbyrandom/{limit}',[MerchantController::class,'showByRandom']);
     Route::get('merchant/showbyid/{id}',[MerchantController::class,'showById']);
@@ -79,9 +80,21 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
 
     //Order
     Route::get('order/show',[OrderController::class,'showOrderbyUserLogin']);
-    //php artisan serve --host 0.0.0.0 for Emulator Android Windows
+    Route::get('order/show/finished',[OrderController::class,'showOrderFinished']);
+    Route::post('order/create',[OrderController::class,'createOrder']);
+    Route::put('order/editstatus/{id}',[OrderController::class,'editStatus']);
 
+    //Detail Order
+    Route::get('orderdetail/show/{id_order}',[OrderDetailController::class,'editStatus']);
+    Route::post('orderdetail/create',[OrderDetailController::class,'createDetailOrder']);
+    
     //Payment
+    Route::get('payment/show/{id_order}',[PaymentController::class,'showPaymentByOrder']);
+    Route::post('payment/create',[PaymentController::class,'createPayment']);
+
+    
     //Feed Posting
-    //Chat --Firebase
+    Route::get('feed/showall',[FeedController::class,'showAllFeed']);
+    Route::post('feed/create',[FeedController::class,'createFeed']);
+    //php artisan serve --host 0.0.0.0 for Emulator Android Windows
 });
