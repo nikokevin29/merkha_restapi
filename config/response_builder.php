@@ -1,7 +1,7 @@
 <?php
 
 
-use App\ApiCode;
+use App\Helpers\ApiCode;
 
 return [
     /*

@@ -7,6 +7,7 @@ use App\Models\Merchant;
 use App\Models\ProductPhoto;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;
+use DB;
 
 class ProductController extends Controller
 {
@@ -28,6 +29,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -62,6 +65,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -96,6 +101,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -130,6 +137,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -164,6 +173,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -204,6 +215,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -238,6 +251,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
@@ -272,6 +287,8 @@ class ProductController extends Controller
                 'merchant'         =>$data->getMerchant->name,
                 'merchant_location'=>$data->getMerchant->province,
                 'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
                 'description'      =>$data->description,
                 'price'            =>$data->price,
