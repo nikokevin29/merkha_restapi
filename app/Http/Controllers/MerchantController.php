@@ -4,95 +4,96 @@ namespace App\Http\Controllers;
 use App\Models\Merchant;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
+use DB;
 class MerchantController extends Controller
 {
     public function showByRandom($limit){
-        $datas = Merchant::inRandomOrder()
-        ->where('merchant_id','<>','0')
-        ->join('user','user.id','=','merchant.id_user')
-        ->take($limit)
+        $datas = DB::table('user')
+        ->join('merchant','user.id','merchant.id_user')
+        ->select(
+            'user.id as id_user',
+            'merchant.id as id_merchant',
+            'merchant.name',
+            'merchant.merchant_logo',
+            'merchant.description',
+            'province',
+            'city',
+            'country',
+            'followers_count',
+            'merchant.created_at',
+            'merchant.updated_at',
+            'last_access',
+            'active_status')
+        ->where('merchant.paused','!=','1')
+        ->limit($limit)
+        ->inRandomOrder()
         ->get();
-        $getAll = [];
-        foreach($datas as $data)
-        {
-            array_push($getAll,[
-                'id_user'               =>$data->id_user,
-                'merchant_id'           =>$data->merchant_id,
-                'business_type'         =>$data->getBusinessType->business_name,
-                'merchant_category'     =>$data->getMerchantCategory->category_name,
-                'merchant_name'         =>$data->name,
-                'address'               =>$data->address,
-                'email'                 =>$data->email,
-                'phone_number'          =>$data->phone_number,
-                'status'                =>$data->status,
-                'bio'                   =>$data->bio,
-                'followers_count'       =>$data->followers_count,
-                'following_count'       =>$data->following_count,
-                'url_photo'             =>$data->url_photo,
-                'created_at'            =>$data->created_at->format('Y-m-d H:i:s'),
-                'updated_at'            =>$data->updated_at->format('Y-m-d H:i:s'),
-                ]);
-        }   
-        return ResponseFormatter::success($getAll,'Show Random Limit By '.$limit);
+        return ResponseFormatter::success($datas,'Show Random Limit By '.$limit);
     }
     public function showById($id){//show merchant by id user
-        $datas = Merchant::where('id_user',$id)
-        ->where('merchant_id','<>','0')
-        ->join('user','user.id','=','merchant.id_user')
+        $datas = DB::table('user')
+        ->join('merchant','user.id','merchant.id_user')
+        ->select(
+            'user.id as id_user',
+            'merchant.id as id_merchant',
+            'merchant.name',
+            'merchant.merchant_logo',
+            'merchant.description',
+            'province',
+            'city',
+            'country',
+            'followers_count',
+            'merchant.created_at',
+            'merchant.updated_at',
+            'last_access',
+            'active_status')
+        ->where('merchant.paused','!=','1')
+        ->where('user.id','=',$id)
         ->get();
-        $getAll = [];
-        foreach($datas as $data)
-        {
-            array_push($getAll,[
-                'id_user'               =>$data->id_user,
-                'merchant_id'           =>$data->merchant_id,
-                'business_type'         =>$data->getBusinessType->business_name,
-                'merchant_category'     =>$data->getMerchantCategory->category_name,
-                'merchant_name'         =>$data->name,
-                'address'               =>$data->address,
-                'email'                 =>$data->email,
-                'phone_number'          =>$data->phone_number,
-                'status'                =>$data->status,
-                'bio'                   =>$data->bio,
-                'followers_count'       =>$data->followers_count,
-                'following_count'       =>$data->following_count,
-                'url_photo'             =>$data->url_photo,
-                'created_at'            =>$data->created_at->format('Y-m-d H:i:s'),
-                'updated_at'            =>$data->updated_at->format('Y-m-d H:i:s'),
-                ]);
-        }  
-        return ResponseFormatter::success($getAll,'Show Merchant By '.$id); 
+        return ResponseFormatter::success($datas,'Show Merchant By '.$id); 
+    }
+    public function showByMerchantId($id){//show merchant by merchant id
+        $datas = DB::table('user')
+        ->join('merchant','user.id','merchant.id_user')
+        ->select(
+            'user.id as id_user',
+            'merchant.id as id_merchant',
+            'merchant.name',
+            'merchant.merchant_logo',
+            'merchant.description',
+            'province',
+            'city',
+            'country',
+            'followers_count',
+            'merchant.created_at',
+            'merchant.updated_at',
+            'last_access',
+            'active_status')
+        ->where('merchant.paused','!=','1')
+        ->where('merchant.id',$id)
+        ->get();
+        return ResponseFormatter::success($datas,'Show Merchant By Id '.$id); 
     }
     public function searchByMerchantName($merchantName){
-        if($merchantName == null){
-            $datas = Merchant::query()->join('user','user.id','=','merchant.id_user')->get();
-        }
-        else{
-            $datas = Merchant::query()
-            ->where('name','like','%'.$merchantName.'%')
-            ->join('user','user.id','=','merchant.id_user')->get();
-        }
-        $getAll = [];
-        foreach($datas as $data)
-        {
-            array_push($getAll,[
-                'id_user'               =>$data->id_user,
-                'merchant_id'           =>$data->merchant_id,
-                'business_type'         =>$data->getBusinessType->business_name,
-                'merchant_category'     =>$data->getMerchantCategory->category_name,
-                'merchant_name'         =>$data->name,
-                'address'               =>$data->province,
-                'email'                 =>$data->email,
-                'phone_number'          =>$data->phone_number,
-                'status'                =>$data->status,
-                'bio'                   =>$data->bio,
-                'followers_count'       =>$data->followers_count,
-                'following_count'       =>$data->following_count,
-                'url_photo'             =>$data->url_photo,
-                'created_at'            =>$data->created_at->format('Y-m-d H:i:s'),
-                'updated_at'            =>$data->updated_at->format('Y-m-d H:i:s'),
-                ]);
-        }
-        return ResponseFormatter::success($getAll,'Seach By Merchant Name ');
+        $datas = DB::table('user')
+        ->join('merchant','user.id','merchant.id_user')
+        ->select(
+            'user.id as id_user',
+            'merchant.id as id_merchant',
+            'merchant.name',
+            'merchant.merchant_logo',
+            'merchant.description',
+            'province',
+            'city',
+            'country',
+            'followers_count',
+            'merchant.created_at',
+            'merchant.updated_at',
+            'last_access',
+            'active_status')
+        ->where('merchant.paused','!=','1')
+        ->where('merchant.name','like', "%{$merchantName}%")
+        ->get();
+        return ResponseFormatter::success($datas,'Seach By Merchant Name ');
     }
 }

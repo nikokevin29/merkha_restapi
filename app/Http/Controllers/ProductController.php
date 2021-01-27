@@ -12,7 +12,7 @@ use DB;
 class ProductController extends Controller
 {
     public function showAll(){
-        $datas = Product::all();
+        $datas = Product::where('paused','!=','1')->get();
         $getAll = [];
         foreach($datas as $data)
         {
@@ -48,7 +48,9 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Show All Product');
     }
     public function showByCategory($id){
-        $datas = Product::where('id_category',$id)->get();
+        $datas = Product::where('id_category',$id)
+        ->where('paused','!=','1')
+        ->get();
         $getAll = [];
         foreach($datas as $data)
         {
@@ -84,7 +86,7 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Show Product By id '.$id.' Success');
     }
     public function showDiscover($limit){//Random Show By limit
-        $datas = Product::inRandomOrder()->take($limit)->get();
+        $datas = Product::inRandomOrder()->where('paused','!=','1')->take($limit)->get();
         $getAll = [];
         foreach($datas as $data)
         {
@@ -120,7 +122,7 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Show All Product By Limit Discover');
     }
     public function showByMerchant($id){
-        $datas = Product::where('id_merchant',$id)->get();
+        $datas = Product::where('id_merchant',$id)->where('paused','!=','1')->get();
         $getAll = [];
         foreach($datas as $data)
         {
@@ -156,7 +158,10 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Show Product By Merchant '.$id);
     }
     public function showByOrder($limit,$order){
-        $datas = Product::orderBy('created_at', $order)->take($limit)->get();
+        $datas = Product::orderBy('created_at', $order)
+        ->where('paused','!=','1')
+        ->take($limit)
+        ->get();
         $getAll = [];
         foreach($datas as $data)
         {
@@ -197,6 +202,7 @@ class ProductController extends Controller
         ->selectRaw('product.*, SUM(order_detail.amount) AS quantity_sold')
         ->groupBy(['product.id']) // should group by primary key
         ->orderByDesc('quantity_sold')
+        ->where('paused','!=','1')
         ->take($limit)
         ->get();
         $getAll = [];
@@ -234,7 +240,10 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Show Best Seller Limit By '.$limit);
     }
     public function searchByProductName($productName){
-        $datas = Product::query()->where('product_name','like','%'.$productName.'%')->get();
+        $datas = Product::query()
+        ->where('product_name','like','%'.$productName.'%')
+        ->where('paused','!=','1')
+        ->get();
         $getAll = [];
         foreach($datas as $data)
         {
@@ -270,7 +279,9 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Seach By Product Name '.$productName);
     }
     public function showById($id){
-        $product = Product::where('id',$id)->get();
+        $product = Product::where('id',$id)
+        ->where('paused','!=','1')
+        ->get();
         $getAll = [];
         foreach($product as $data)
         {

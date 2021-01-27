@@ -15,6 +15,8 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\UserInterestController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FeedController;
+use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\FollowingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,7 +78,8 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     //Merchant
     Route::get('merchant/showbyrandom/{limit}',[MerchantController::class,'showByRandom']);
     Route::get('merchant/showbyid/{id}',[MerchantController::class,'showById']);
-    Route::get('product/searchbymerchant/{merchantName}',[MerchantController::class,'searchByMerchantName']);
+    Route::get('merchant/searchbymerchant/{merchantName}',[MerchantController::class,'searchByMerchantName']);
+    Route::get('merchant/showbymerchantid/{id}',[MerchantController::class,'showByMerchantId']);
 
     //Order
     Route::get('order/show',[OrderController::class,'showOrderbyUserLogin']);
@@ -96,5 +99,14 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     //Feed Posting
     Route::get('feed/showall',[FeedController::class,'showAllFeed']);
     Route::post('feed/create',[FeedController::class,'createFeed']);
+
+    //Voucher
+    Route::get('voucher/showall',[VoucherController::class,'showVoucher']);
+    Route::get('voucher/usevoucher/{code}',[VoucherController::class,'useVoucher']);
+    Route::get('voucher/check/{code}',[VoucherController::class,'checkVoucher']);
+
+    //Following
+    Route::get('following/follow/{id_merchant}',[FollowingController::class,'follow']);
+    Route::get('following/unfollow/{id_merchant}',[FollowingController::class,'unfollow']);
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
 });

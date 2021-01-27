@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Voucher extends Model
+class Following extends Model
 {
     use HasFactory;
+
     public $timestamps = true;
-    protected $table = 'voucher';
+    protected $table = 'following';
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
-    public function getMerchant(){
-        return $this->belongsTo(Merchant::class,'id_merchant','id');
-    }
-
+    protected $fillable = [
+        'id_user',
+        'following', // id_merchant
+    ];
 }
