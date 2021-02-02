@@ -20,3 +20,7 @@ class OrderDetailController extends Controller
     }
 
 }
+// Buat Update Stock
+// Flight::where('active', 1)
+//       ->where('destination', 'San Diego')
+//       ->update(['delayed' => 1]);

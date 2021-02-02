@@ -9,15 +9,18 @@ use App\Models\Feed;
 use DB;
 class FeedController extends Controller
 {
-    public function showAllFeed(){
-        $user = Auth::user()->id;
+    public function showAllFeed(){// By User Followed (Only Merchant)
+        $user = Auth::user();
         $datas = DB::table('feed')->orderBy('feed.created_at','DESC')
         ->select(
             'feed.id',
             'feed.id_user',
             'feed.id_merchant',
+            'feed.id_product',
             'merchant.name as merchant_name',
+            'merchant.merchant_logo',
             'product.product_name',
+            'product.price',
             'like_count',
             'url_image',
             'caption',
@@ -27,17 +30,47 @@ class FeedController extends Controller
         ->join('merchant','merchant.id','feed.id_merchant')
         ->join('following','feed.id_merchant','following.following')
         ->where('feed.paused','!=','1')
-        ->where('following.id_user',$user)
+        ->where('following.id_user',$user->id)
         ->get();
-        return ResponseFormatter::success($datas,'Show all Feed');
+        return ResponseFormatter::success($datas,'Show all Feed Followed by '.$user->username);
     }
     public function createFeed(Request $request){
         $user               = Auth::user()->id;//get user id login
         $input              = $request->all();
         $input['id_user']   = $user;
         $feed               = Feed::create($input);
-
-
         return ResponseFormatter::success($feed,'Feed Created');
+    }
+    public function editFeed(Request $request,$id){
+        $data = Feed::where('id',$id)->update($request->all());
+        return ResponseFormatter::success($data,'Feed Updated');
+    }
+    public function deleteFeed(Feed $id){
+        $id->delete();
+        return ResponseFormatter::success($id,'Comment Deleted');
+    }
+    public function showOwnFeed(Request $request){
+        $user = Auth::user();
+        $datas = DB::table('feed')->orderBy('feed.created_at','DESC')
+        ->select(
+            'feed.id',
+            'feed.id_user',
+            'feed.id_merchant',
+            'feed.id_product',
+            'user.username as merchant_name',
+            'user.url_photo as merchant_logo',
+            'product.product_name',
+            'product.price',
+            'like_count',
+            'url_image',
+            'caption',
+            'location'
+        )
+        ->join('product','product.id','feed.id_product')
+        ->join('user','user.id','feed.id_user')
+        ->where('feed.paused','!=','1')
+        ->where('feed.id_user',$user->id)
+        ->get();
+        return ResponseFormatter::success($datas,'Show all Feed Own of '.$user->username);
     }
 }

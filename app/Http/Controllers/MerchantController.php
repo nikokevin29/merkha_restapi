@@ -26,7 +26,7 @@ class MerchantController extends Controller
             'active_status')
         ->where('merchant.paused','!=','1')
         ->limit($limit)
-        ->inRandomOrder()
+        //->inRandomOrder()
         ->get();
         return ResponseFormatter::success($datas,'Show Random Limit By '.$limit);
     }

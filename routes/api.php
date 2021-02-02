@@ -17,6 +17,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\FollowingController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MerchantCategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -98,7 +101,16 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     
     //Feed Posting
     Route::get('feed/showall',[FeedController::class,'showAllFeed']);
+    Route::get('feed/showownfeed',[FeedController::class,'showOwnFeed']);
     Route::post('feed/create',[FeedController::class,'createFeed']);
+    Route::put('feed/editFeed/{id}',[FeedController::class,'editFeed']);
+    Route::delete('feed/deleteFeed/{id}',[FeedController::class,'deleteFeed']);
+
+    //Comment
+    Route::get('comment/showcommentbyid/{id_feed}',[CommentController::class,'showComment']);
+    Route::post('comment/createcomment',[CommentController::class,'createComment']);
+    Route::put('comment/editcomment/{id}',[CommentController::class,'editComment']);
+    Route::delete('comment/deletecomment/{id}',[CommentController::class,'deleteComment']);
 
     //Voucher
     Route::get('voucher/showall',[VoucherController::class,'showVoucher']);
@@ -106,7 +118,13 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('voucher/check/{code}',[VoucherController::class,'checkVoucher']);
 
     //Following
+    Route::get('following/followlist',[FollowingController::class,'followList']);
     Route::get('following/follow/{id_merchant}',[FollowingController::class,'follow']);
     Route::get('following/unfollow/{id_merchant}',[FollowingController::class,'unfollow']);
+    Route::get('following/checkstatus/{id_merchant}',[FollowingController::class,'checkStatus']);
+
+    //Merchant Category
+    Route::get('merchant_category/showall/',[MerchantCategoryController::class,'showMerchantDisplayById']);
+    Route::get('merchant_category/showbyid/{id}',[MerchantCategoryController::class,'showProductByMerchantCategory']);
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
 });
