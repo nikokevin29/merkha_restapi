@@ -19,6 +19,7 @@ class MerchantController extends Controller
             'province',
             'city',
             'country',
+            'website',
             'followers_count',
             'merchant.created_at',
             'merchant.updated_at',
@@ -26,7 +27,7 @@ class MerchantController extends Controller
             'active_status')
         ->where('merchant.paused','!=','1')
         ->limit($limit)
-        //->inRandomOrder()
+        ->inRandomOrder()
         ->get();
         return ResponseFormatter::success($datas,'Show Random Limit By '.$limit);
     }
@@ -42,6 +43,7 @@ class MerchantController extends Controller
             'province',
             'city',
             'country',
+            'website',
             'followers_count',
             'merchant.created_at',
             'merchant.updated_at',
@@ -64,6 +66,7 @@ class MerchantController extends Controller
             'province',
             'city',
             'country',
+            'website',
             'followers_count',
             'merchant.created_at',
             'merchant.updated_at',
@@ -86,6 +89,7 @@ class MerchantController extends Controller
             'province',
             'city',
             'country',
+            'website',
             'followers_count',
             'merchant.created_at',
             'merchant.updated_at',

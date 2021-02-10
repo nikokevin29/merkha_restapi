@@ -18,11 +18,20 @@ class MerchantCategoryController extends Controller
         return ResponseFormatter::success($data,'Show Merchant Category by id merchant Category');
     }
     public function showProductByMerchantCategory($ids){
+        // $photo = DB::table('product')
+        // ->select('product_photo.url_photo')
+        // ->join('product_photo','product_photo.id_product','product.id')
+        // ->where('product.id',6)
+        // ->pluck('product_photo.url_photo')->all();
+
+        // return $photo;
+        //$photo = ['www','wpwpwpwp'];
         $datas = DB::table('product')
         ->select('product.id',
         'product_category.category_name as category',
-        'merchant.merchant_id as merchant',
+        'merchant.name as merchant',
         'merchant.province as merchant_location',
+        'merchant.website',
         'merchant.merchant_logo',
         'merchant.id_province',
         'merchant.id_city',
@@ -33,7 +42,7 @@ class MerchantCategoryController extends Controller
         'product.size',
         'product.stock',
         'product.weight',
-        'product_photo.url_photo as preview'
+        'product_photo.url_photo as preview',
         )
         ->join('merchant','merchant.id','product.id_merchant')
         ->join('product_category','product_category.id','product.id_category')
@@ -41,6 +50,15 @@ class MerchantCategoryController extends Controller
         ->where('product.paused','!=','1')
         ->where('merchant.id_merchant_category',$ids)
         ->get();
+
+        // function($query){
+        //     $query->select('url_photo')
+        //     ->from('product_photo')
+        //     ->where('product_photo.product_id','product.id')
+        //     ->pluck('product_photo.url_photo')
+        //     ->all();
+        // }
+        
         // return $datas;
         // $getAll = [];
         // foreach($datas as $data)

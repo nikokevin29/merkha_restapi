@@ -15,16 +15,19 @@ class MerchantCategory extends Model
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
-    public function getMerchant(){
+    public function merchant(){
         return $this->hasOne(Merchant::class,'id','id_merchant');
     }
-    public function getPhoto(){
+    public function product_photo(){
         return $this->hasMany(ProductPhoto::class,'id_product','id');
     }
-    public function getCategory(){
+    public function product_category(){
         return $this->hasOne(ProductCategory::class,'id','id_category');
     }
-    public function getGambar(){
-        return $this->hasMany(ProductPhoto::class);
+    public function product(){
+        return $this->hasOne(Product::class,'id','id_product');
     }
+    // public function getGambar(){
+    //     return $this->hasMany(ProductPhoto::class);
+    // }
 }

@@ -316,4 +316,130 @@ class ProductController extends Controller
         }   
         return ResponseFormatter::success($getAll,'Show By Id '.$id);
     }
+    public function showByMerchantCategory($id){
+        $product = Product::where('merchant.id_merchant_category',$id)
+        ->join('merchant','product.id_merchant','merchant.id')
+        ->where('product.paused','!=','1')
+        ->get();
+        $getAll = [];
+        foreach($product as $data)
+        {
+            //get Array Photo
+            $photo = [];
+            foreach($data->getPhoto as $keys => $getPhotos) {
+                $photo[$keys] = $getPhotos->url_photo;
+            }
+            array_push($getAll,[
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
+                ]);
+        } 
+        return ResponseFormatter::success($getAll,'Show By Merchant Category' . $id);
+    }
+    public function showBestSellerById($id){
+        $datas = Product::query()
+        ->join('order_detail', 'order_detail.id_product', '=', 'product.id')
+        ->selectRaw('product.*, SUM(order_detail.amount) AS quantity_sold')
+        ->groupBy(['product.id']) // should group by primary key
+        ->orderByDesc('quantity_sold')
+        ->where('paused','!=','1')
+        ->where('product.id_merchant',$id)
+        ->take(6)
+        ->get();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            //get Array Photo
+            $photo = [];
+            foreach($data->getPhoto as $keys => $getPhotos) {
+                $photo[$keys] = $getPhotos->url_photo;
+            }
+            array_push($getAll,[
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
+                ]);
+        }   
+        return ResponseFormatter::success($getAll,'Show Best Seller By Merchant ');
+    }
+
+    public function searchProductByMerchant($productName,$idMerchant){
+        $datas = Product::query()
+        ->where('product_name','like','%'.$productName.'%')
+        ->where('paused','!=','1')
+        ->where('id_merchant','=',$idMerchant)
+        ->get();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            //get Array Photo
+            $photo = [];
+            foreach($data->getPhoto as $keys => $getPhotos) {
+                $photo[$keys] = $getPhotos->url_photo;
+            }
+            array_push($getAll,[
+                'id'               =>$data->id,
+                'category'         =>$data->getCategory->category_name,
+                'merchant_id'      =>$data->getMerchant->id,
+                'website'          =>$data->getMerchant->website,
+                'merchant'         =>$data->getMerchant->name,
+                'merchant_location'=>$data->getMerchant->province,
+                'merchant_logo'    =>$data->getMerchant->merchant_logo,
+                'id_province'      =>$data->getMerchant->id_province,
+                'id_city'          =>$data->getMerchant->id_city,
+                'product_name'     =>$data->product_name,
+                'description'      =>$data->description,
+                'price'            =>$data->price,
+                'color'            =>$data->color,
+                'size'             =>$data->size,
+                'stock'            =>$data->stock,
+                'weight'           =>$data->weight,
+                'created_at'       =>$data->created_at,
+                'updated_at'       =>$data->updated_at,
+                'report_count'     =>$data->report_count,
+                'preview'          =>$getPhotos->url_photo ??'',
+                'photo'            =>$photo,
+                ]);
+        }
+        return ResponseFormatter::success($getAll,'Seach By Product Name '.$productName);
+    }
+
+    
 }

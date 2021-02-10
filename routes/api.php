@@ -19,6 +19,7 @@ use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MerchantCategoryController;
+use App\Http\Controllers\AppContentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,12 +72,16 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     //Product
     Route::get('product/showall',[ProductController::class,'showAll']);
     Route::get('product/showbycategory/{id}',[ProductController::class,'showByCategory']);
-    Route::get('product/showbymerchant/{id}',[ProductController::class,'showByMerchant']);
+    Route::get('product/showbymerchant/{id}',[ProductController::class,'showByMerchant']);//Show Product By Merchant
     Route::get('product/showdiscover/{limit}',[ProductController::class,'showDiscover']);
     Route::get('product/showbyorder/{limit}/{order}',[ProductController::class,'showByOrder']);//(order) asc : desc
     Route::get('product/showbybestseller/{limit}',[ProductController::class,'showByBestseller']);
     Route::get('product/searchbyproduct/{productName}',[ProductController::class,'searchByProductName']);
     Route::get('product/showbyid/{id}',[ProductController::class,'showById']);
+    Route::get('product/showbymerchantcategory/{id}',[ProductController::class,'showByMerchantCategory']);
+    Route::get('product/showbestsellerbymerchant/{id}',[ProductController::class,'showBestSellerById']);
+
+    Route::get('product/searchproductbymerchant/{productName}/{idMerchant}',[ProductController::class,'searchProductByMerchant']);
 
     //Merchant
     Route::get('merchant/showbyrandom/{limit}',[MerchantController::class,'showByRandom']);
@@ -98,13 +103,16 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('payment/show/{id_order}',[PaymentController::class,'showPaymentByOrder']);
     Route::post('payment/create',[PaymentController::class,'createPayment']);
 
-    
     //Feed Posting
     Route::get('feed/showall',[FeedController::class,'showAllFeed']);
     Route::get('feed/showownfeed',[FeedController::class,'showOwnFeed']);
     Route::post('feed/create',[FeedController::class,'createFeed']);
     Route::put('feed/editFeed/{id}',[FeedController::class,'editFeed']);
     Route::delete('feed/deleteFeed/{id}',[FeedController::class,'deleteFeed']);
+    Route::get('feed/showfeedbyid/{id}',[FeedController::class,'showMerchantFeedById']); //Show Feed By Merchant Id
+    Route::get('feed/showbestseller/{limit}',[FeedController::class,'showFeedBestSellerProduct']);
+    Route::get('feed/showrandom/{limit}',[FeedController::class,'showFeedRandom']);
+    Route::get('feed/showbyuserid/{id}',[FeedController::class,'showFeedByUserId']);
 
     //Comment
     Route::get('comment/showcommentbyid/{id_feed}',[CommentController::class,'showComment']);
@@ -122,9 +130,16 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('following/follow/{id_merchant}',[FollowingController::class,'follow']);
     Route::get('following/unfollow/{id_merchant}',[FollowingController::class,'unfollow']);
     Route::get('following/checkstatus/{id_merchant}',[FollowingController::class,'checkStatus']);
+    Route::get('following/countFollowersMerchant/{id_merchant}',[FollowingController::class,'countFollowersMerchant']);
 
     //Merchant Category
     Route::get('merchant_category/showall/',[MerchantCategoryController::class,'showMerchantDisplayById']);
     Route::get('merchant_category/showbyid/{id}',[MerchantCategoryController::class,'showProductByMerchantCategory']);
+
+    //App Content
+    Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
+
+    //TODO: Carousel per Merchant
+    //TODO: App Content Tab Home
 });

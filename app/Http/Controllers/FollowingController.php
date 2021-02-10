@@ -51,5 +51,9 @@ class FollowingController extends Controller
         return ResponseFormatter::success($check,'Check Done');
 
     }
-    
+    //note: return not Formated( just number)
+    public function countFollowersMerchant($idMerchant){
+        $count = Following::where('following',$idMerchant)->count();
+        return $count;
+    }
 }
