@@ -69,12 +69,22 @@ class OrderController extends Controller
     }
 
     public function createOrder(Request $request){
-        $user               = Auth::user()->id;//get user id login
-        $input              = $request->all();
-        $input['id_buyer']  = $user;
-        $order              = Order::create($input);
-
-        return ResponseFormatter::success($order,'order created');
+        //id_merchant, id_buyer(auto), id_destination, id_voucher,order_number(auto), order_status,shipping_price, discount_price, total_price
+        $user_id                = Auth::user()->id;//get user id login
+        $data                   = new Order;
+        $data->id_merchant      = $request->id_merchant;
+        $data->id_buyer         = $user_id; // User ID Auto
+        $data->id_destination   = $request->id_destination;
+        $data->id_voucher       = $request->id_voucher;
+        $data->order_number     = "";
+        $data->order_status     = $request->order_status;
+        $data->shipping_price   = $request->shipping_price;
+        $data->discount_price   = $request->discount_price;
+        $data->total_price      = $request->total_price;
+        $data->save();
+        $data->order_number     = Order::orderNumber().$data->id;
+        $data->save();
+        return ResponseFormatter::success($data,'Order Created');
     }
     public function editStatus(Request $request,$id){
         $ids    = Order::find($id);

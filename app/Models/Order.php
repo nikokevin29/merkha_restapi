@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Order extends Model
 {
     use HasFactory;
@@ -43,6 +43,14 @@ class Order extends Model
     }
     public function getMerchant(){
         return $this->belongsTo(Merchant::class,'id_merchant','id');
+    }
+    public static function orderNumber(){
+        $date = Carbon::now();
+        $getYear = $date->year;
+        $getYear = substr($getYear,-2);
+        $getMonth = $date->format('m');
+        $getDay = $date->format('d');
+        return "ORD".$getDay.$getMonth.$getYear;
     }
 
 

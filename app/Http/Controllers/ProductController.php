@@ -86,7 +86,7 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Show Product By id '.$id.' Success');
     }
     public function showDiscover($limit){//Random Show By limit
-        $datas = Product::inRandomOrder()->where('paused','!=','1')->take($limit)->get();
+        $datas = Product::inRandomOrder()->where('product.paused','!=','1')->take($limit)->get();
         $getAll = [];
         foreach($datas as $data)
         {

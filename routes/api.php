@@ -140,6 +140,5 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
 
-    //TODO: Carousel per Merchant
-    //TODO: App Content Tab Home
+    //TODO: Carousel per Merchant App Content
 });

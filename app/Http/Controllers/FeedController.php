@@ -121,6 +121,7 @@ class FeedController extends Controller
         ->join('product','product.id','feed.id_product')
         ->join('merchant','merchant.id','feed.id_merchant')
         ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
         ->where('feed.id_merchant',$id)
         ->get();
         return ResponseFormatter::success($datas,'Show Feed By Merchant');
@@ -178,6 +179,7 @@ class FeedController extends Controller
         ->join('merchant','merchant.id','feed.id_merchant')
         ->join('following','feed.id_merchant','following.following')
         ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
         ->take($limit)
         ->get();
         return ResponseFormatter::success($datas,'Show Feed Random And Limit = '.$limit);
@@ -202,6 +204,7 @@ class FeedController extends Controller
         ->join('product','product.id','feed.id_product')
         ->join('user','user.id','feed.id_user')
         ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
         ->where('feed.id_user', $id)
         ->get();
         return ResponseFormatter::success($datas,'Show all Feed By Specific User');
