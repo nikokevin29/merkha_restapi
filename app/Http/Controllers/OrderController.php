@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Merchant;
+use App\Models\Voucher;
 
 class OrderController extends Controller
 {
@@ -16,11 +17,16 @@ class OrderController extends Controller
     // WAITING FOR PAYMENT, NEW ORDER,  , READY TO SHIP, ON SHIPPING, ORDER FINISHED, ORDER CANCELED
     public function showOrderbyUserLogin(){
         $user = Auth::user()->id;
-        $data = Order::where('id_buyer',$user)->whereNotIn('order_status',['ORDER FINISHED'])->orderBy('updated_at', 'DESC')->get();
+        $data = Order::where('id_buyer',$user)
+        ->whereNotIn('order_status',['ORDER FINISHED'])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
         $getAll = [];
         foreach($data as $d){
             array_push($getAll,[
             'id'               =>$d->id,
+            'id_merchant'      =>$d->id_merchant,
+            'order_number'     =>$d->order_number,
             'merchant_name'    =>$d->getMerchant->firstWhere('id',$d->id_merchant)->name,
             'id_buyer'         =>$d->id_buyer,//for getting address
             'address'          =>$d->getAddress->firstWhere('id',$d->id_destination)->address,
@@ -33,8 +39,8 @@ class OrderController extends Controller
             'shipping_price'   =>$d->shipping_price,
             'discount_price'   =>$d->discount_price,
             'total_price'      =>$d->total_price,
-            'created_at'       =>$d->created_at,
-            'updated_at'       =>$d->updated_at,
+            'created_at'       =>$d->created_at->format('Y-m-d H:i:s'),
+            'updated_at'       =>$d->updated_at->format('Y-m-d H:i:s'),
             'detail'           =>$d->getDetails,
             ]);
         }
@@ -43,11 +49,16 @@ class OrderController extends Controller
 
     public function showOrderFinished(){
         $user = Auth::user()->id;
-        $data = Order::where('id_buyer',$user)->where('order_status','ORDER FINISHED')->orderBy('updated_at', 'DESC')->get();
+        $data = Order::where('id_buyer',$user)
+        ->where('order_status','ORDER FINISHED')
+        ->orderBy('updated_at', 'DESC')
+        ->get();
         $getAll = [];
         foreach($data as $d){
             array_push($getAll,[
             'id'               =>$d->id,
+            'id_merchant'      =>$d->id_merchant,
+            'order_number'     =>$d->order_number,
             'merchant_name'    =>$d->getMerchant->firstWhere('id',$d->id_merchant)->name,
             'id_buyer'         =>$d->id_buyer,//for getting address
             'address'          =>$d->getAddress->firstWhere('id',$d->id_destination)->address,
@@ -60,8 +71,8 @@ class OrderController extends Controller
             'shipping_price'   =>$d->shipping_price,
             'discount_price'   =>$d->discount_price,
             'total_price'      =>$d->total_price,
-            'created_at'       =>$d->created_at,
-            'updated_at'       =>$d->updated_at,
+            'created_at'       =>$d->created_at->format('Y-m-d H:i:s'),
+            'updated_at'       =>$d->updated_at->format('Y-m-d H:i:s'),
             'detail'           =>$d->getDetails,
             ]);
         }
@@ -75,7 +86,7 @@ class OrderController extends Controller
         $data->id_merchant      = $request->id_merchant;
         $data->id_buyer         = $user_id; // User ID Auto
         $data->id_destination   = $request->id_destination;
-        $data->id_voucher       = $request->id_voucher;
+        //$data->id_voucher       = $request->id_voucher;
         $data->order_number     = "";
         $data->order_status     = $request->order_status;
         $data->shipping_price   = $request->shipping_price;
@@ -84,6 +95,9 @@ class OrderController extends Controller
         $data->save();
         $data->order_number     = Order::orderNumber().$data->id;
         $data->save();
+
+        //Voucher::find($request->id_voucher)->decrement('voucher_quantity'); //Decrement Voucher\
+
         return ResponseFormatter::success($data,'Order Created');
     }
     public function editStatus(Request $request,$id){
@@ -91,6 +105,12 @@ class OrderController extends Controller
         $ids->order_status = $request->order_status;
         $ids->save();
         return ResponseFormatter::success($ids,'status Edited');
+    }
+    public function editVoucher(Request $request,$id){
+        $id = Order::find($id);
+        $id->id_voucher = $request->id_voucher;
+        $id->save();
+        return ResponseFormatter::success($id,'Voucher Edited');
     }
 
 

@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\OrderDetail;
+use App\Models\Product;
 
 class OrderDetailController extends Controller
 {
     public function createDetailOrder(Request $request){
         $input = $request->all();
+        Product::where('id',$request->id_product)->decrement('stock',$request->amount);
         return ResponseFormatter::success(OrderDetail::create($input),'Detail Created');
     }
 

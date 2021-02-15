@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('order/show/finished',[OrderController::class,'showOrderFinished']);
     Route::post('order/create',[OrderController::class,'createOrder']);
     Route::put('order/editstatus/{id}',[OrderController::class,'editStatus']);
+    Route::put('order/editvoucher/{id}',[OrderController::class,'editVoucher']);
 
     //Detail Order
     Route::get('orderdetail/show/{id_order}',[OrderDetailController::class,'editStatus']);
@@ -122,7 +123,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
 
     //Voucher
     Route::get('voucher/showall',[VoucherController::class,'showVoucher']);
-    Route::get('voucher/usevoucher/{code}',[VoucherController::class,'useVoucher']);
+    Route::get('voucher/usevoucher/{id}',[VoucherController::class,'useVoucher']);
     Route::get('voucher/check/{code}',[VoucherController::class,'checkVoucher']);
 
     //Following

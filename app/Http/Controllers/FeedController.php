@@ -33,9 +33,11 @@ class FeedController extends Controller
         ->join('merchant','merchant.id','feed.id_merchant')
         ->join('following','feed.id_merchant','following.following')
         ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
         ->where('following.id_user',$user->id)
         ->get();
         
+        //note: this is user feed
         $userFeed = DB::table('feed')->orderBy('feed.created_at','DESC')
         ->select(
             'feed.id',
@@ -54,11 +56,12 @@ class FeedController extends Controller
         ->join('product','product.id','feed.id_product')
         ->join('user','user.id','feed.id_user')
         ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
         ->get();
 
         $allFeed = array_merge($merchantFeed->toArray(), $userFeed->toArray()); //Merge 2 Select 
         
-        return ResponseFormatter::success($allFeed,'Show all Feed Followed by '.$user->username);
+        return ResponseFormatter::success($merchantFeed,'Show all Feed Followed by '.$user->username);
     }
     public function createFeed(Request $request){
         $user               = Auth::user()->id;//get user id login
@@ -95,6 +98,7 @@ class FeedController extends Controller
         ->join('product','product.id','feed.id_product')
         ->join('user','user.id','feed.id_user')
         ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
         ->where('feed.id_user',$user->id)
         ->get();
         return ResponseFormatter::success($datas,'Show all Feed Own of '.$user->username);

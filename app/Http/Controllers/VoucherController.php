@@ -53,12 +53,12 @@ class VoucherController extends Controller
         return ResponseFormatter::success($query,'Voucher Avaiable');
     }
 
-    public function useVoucher(Request $request,$code){
+    public function useVoucher(Request $request,$id){
         //note: Kurangin max usage,kurangin voucher_quantity, dalem kurung waktu tertentu
         $now = Carbon::now();
         $query = Voucher::where('start_time','<=',$now)
         ->where('end_time','>=',$now)
-        ->where('voucher_code','=',$code)
+        ->where('id','=',$id)
         ->first();
         if($query == null){
             return ResponseFormatter::error($query, 'Voucher Not Found', 404);
