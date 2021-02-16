@@ -10,7 +10,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Merchant;
 use App\Models\Voucher;
-
+use DB;
 class OrderController extends Controller
 {
     //STATUS ORDER
@@ -41,7 +41,10 @@ class OrderController extends Controller
             'total_price'      =>$d->total_price,
             'created_at'       =>$d->created_at->format('Y-m-d H:i:s'),
             'updated_at'       =>$d->updated_at->format('Y-m-d H:i:s'),
-            'detail'           =>$d->getDetails,
+            'preview'          =>DB::table('product_photo')
+            ->select('url_photo')
+            ->where('id_product',DB::table('order_detail')->where('id_order' ,$d->id)->value('id_product'))->pluck('url_photo')->first(),
+            //'detail'           =>$d->getDetails,
             ]);
         }
         return ResponseFormatter::success($getAll,'Show Transaction User '.$user);
@@ -73,7 +76,9 @@ class OrderController extends Controller
             'total_price'      =>$d->total_price,
             'created_at'       =>$d->created_at->format('Y-m-d H:i:s'),
             'updated_at'       =>$d->updated_at->format('Y-m-d H:i:s'),
-            'detail'           =>$d->getDetails,
+            'preview'          =>DB::table('product_photo')
+            ->select('url_photo')
+            ->where('id_product',DB::table('order_detail')->where('id_order' ,$d->id)->value('id_product'))->pluck('url_photo')->first(),
             ]);
         }
         return ResponseFormatter::success($getAll,'Show Transaction User '.$user);

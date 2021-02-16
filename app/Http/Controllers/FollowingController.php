@@ -56,4 +56,8 @@ class FollowingController extends Controller
         $count = Following::where('following',$idMerchant)->count();
         return $count;
     }
+    //note: return number(following user)
+    public function countFollowingUser(){
+        return Following::where('id_user',Auth::user()->id)->count();
+    }
 }

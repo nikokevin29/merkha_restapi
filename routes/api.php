@@ -97,7 +97,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::put('order/editvoucher/{id}',[OrderController::class,'editVoucher']);
 
     //Detail Order
-    Route::get('orderdetail/show/{id_order}',[OrderDetailController::class,'editStatus']);
+    Route::get('orderdetail/show/{id_order}',[OrderDetailController::class,'showDetailOrder']);
     Route::post('orderdetail/create',[OrderDetailController::class,'createDetailOrder']);
     
     //Payment
@@ -132,6 +132,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('following/unfollow/{id_merchant}',[FollowingController::class,'unfollow']);
     Route::get('following/checkstatus/{id_merchant}',[FollowingController::class,'checkStatus']);
     Route::get('following/countFollowersMerchant/{id_merchant}',[FollowingController::class,'countFollowersMerchant']);
+    Route::get('following/countFollowingUser',[FollowingController::class,'countFollowingUser']);
 
     //Merchant Category
     Route::get('merchant_category/showall/',[MerchantCategoryController::class,'showMerchantDisplayById']);

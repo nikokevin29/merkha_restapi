@@ -8,7 +8,7 @@ use Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\OrderDetail;
 use App\Models\Product;
-
+use DB;
 class OrderDetailController extends Controller
 {
     public function createDetailOrder(Request $request){
@@ -18,7 +18,20 @@ class OrderDetailController extends Controller
     }
 
     public function showDetailOrder($id_order){
-        return ResponseFormatter::success(OrderDetail::where('id_order',$id_order)->get(),'Detail Created');
+        $data = DB::table('order_detail')
+        ->select(
+            'order_detail.id',
+            'order_detail.id_order',
+            'order_detail.id_product',
+            'order_detail.amount',
+            'order_detail.subtotal',
+            'product.product_name',
+            'product.price',
+        )
+        ->join('product','product.id','order_detail.id_product')
+        ->where('id_order',$id_order)
+        ->get();
+        return ResponseFormatter::success($data,'Detail Created');
     }
 
 }

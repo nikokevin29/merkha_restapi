@@ -34,12 +34,15 @@ class Order extends Model
     // public function getUser(){
     //     return $this->hasOne(User::class,'id','id_buyer');
     // }
+    public function getPhoto(){
+        return $this->hasMany(ProductPhoto::class,'id_product','id');
+    }
 
     public function getAddress(){
         return $this->belongsTo(Address::class,'id_buyer','id_user');
     }
     public function getDetails(){
-        return $this->hasMany(OrderDetail::class,'id_order','id');
+        return $this->belongsTo(OrderDetail::class,'id','id_order');
     }
     public function getMerchant(){
         return $this->belongsTo(Merchant::class,'id_merchant','id');
