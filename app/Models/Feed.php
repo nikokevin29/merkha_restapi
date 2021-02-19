@@ -24,8 +24,9 @@ class Feed extends Model
         'location',
         'report_count',
         'created_at',
-        'updated_at',~
+        'updated_at',
     ];
+
     public function getProduct(){
         return $this->hasOne(Product::class,'id','id_product');
     }

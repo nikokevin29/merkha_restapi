@@ -11,6 +11,7 @@ use App\Models\OrderDetail;
 use App\Models\Merchant;
 use App\Models\Voucher;
 use DB;
+use Carbon\Carbon;
 class OrderController extends Controller
 {
     //STATUS ORDER
@@ -18,7 +19,7 @@ class OrderController extends Controller
     public function showOrderbyUserLogin(){
         $user = Auth::user()->id;
         $data = Order::where('id_buyer',$user)
-        ->whereNotIn('order_status',['ORDER FINISHED'])
+        ->whereNotIn('order_status',['FINISHED'])
         ->orderBy('updated_at', 'DESC')
         ->get();
         $getAll = [];
@@ -53,7 +54,7 @@ class OrderController extends Controller
     public function showOrderFinished(){
         $user = Auth::user()->id;
         $data = Order::where('id_buyer',$user)
-        ->where('order_status','ORDER FINISHED')
+        ->where('order_status','FINISHED')
         ->orderBy('updated_at', 'DESC')
         ->get();
         $getAll = [];
@@ -108,6 +109,7 @@ class OrderController extends Controller
     public function editStatus(Request $request,$id){
         $ids    = Order::find($id);
         $ids->order_status = $request->order_status;
+        $ids->received_date = Carbon::now();
         $ids->save();
         return ResponseFormatter::success($ids,'status Edited');
     }

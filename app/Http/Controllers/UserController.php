@@ -205,6 +205,11 @@ class UserController extends Controller
         }
         return ResponseFormatter::success(null,'Password has been successfully changed');
     }
+
+    public function getUserById ($id,Request $request){
+        $data = User::where('id',$id)->first();
+        return ResponseFormatter::success($data,'User Show By Id');
+    }
     
 }
 

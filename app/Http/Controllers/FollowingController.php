@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Following;
+use App\Models\FollowingUser;
 
 class FollowingController extends Controller
 {
@@ -41,13 +42,15 @@ class FollowingController extends Controller
         ->where('following',$id_merchant)
         ->first();
         if(empty($check)){
-            return ResponseFormatter::error([
-                'id' => null,
-                'following'=> null,
-                'message' => 'Merchant Not Found',
-                'error' => $check,
-            ],'Merchant Not Found', 404);
+            // return ResponseFormatter::error([
+            //     'id' => null,
+            //     'following'=> null,
+            //     'message' => 'Merchant Not Found',
+            //     'error' => $check,
+            // ],'Merchant Not Found', 404);
+            return 0;
         }
+        return $check->following;
         return ResponseFormatter::success($check,'Check Done');
 
     }
@@ -58,6 +61,8 @@ class FollowingController extends Controller
     }
     //note: return number(following user)
     public function countFollowingUser(){
-        return Following::where('id_user',Auth::user()->id)->count();
+        $merchant = Following::where('id_user',Auth::user()->id)->count();
+        $user     = FollowingUser::where('id_user',Auth::user()->id)->count();
+        return $merchant+$user;
     }
 }
