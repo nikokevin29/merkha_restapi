@@ -23,6 +23,8 @@ use App\Http\Controllers\AppContentController;
 use App\Http\Controllers\FollowingUserController;
 use App\Http\Controllers\ReviewMerchantController;
 use App\Http\Controllers\ReviewProductController;
+use App\Http\Controllers\ReportProductController;
+use App\Http\Controllers\ReportFeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -161,6 +163,16 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     //Review Product
     Route::post('review_product/create',[ReviewProductController::class,'createReviewProduct']);
     Route::get('review_product/showbyidproduct/{idProduct}',[ReviewProductController::class,'getReviewByIdProduct']);
+
+    //Report Product
+    Route::post('report_product/create',[ReportProductController::class,'createReportProduct']);
+    Route::delete('report_product/delete/{id_product}',[ReportProductController::class,'deleteReportProduct']);
+    Route::get('report_product/check/{id_product}',[ReportProductController::class,'checkReportProduct']);
+
+    //Report Feed
+    Route::post('report_feed/create',[ReportFeedController::class,'createReportFeed']);
+    Route::delete('report_feed/delete/{id_feed}',[ReportFeedController::class,'deleteReportFeed']);
+    Route::get('report_feed/check/{id_feed}',[ReportFeedController::class,'checkReportFeed']);
 
     //App Content
     Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);

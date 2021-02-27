@@ -45,7 +45,7 @@ class UserController extends Controller
                 'first_name'        => 'required',
                 'last_name'         => 'required',
                 'email'             => 'required|email|unique:user',
-                'username'          => 'required|unique:user',
+                'username'          => 'required|unique:user|unique:merchant',
                 'password'          => 'required',
                 'gender'            => 'required',
                 'phone_number'      => 'required',
@@ -68,7 +68,6 @@ class UserController extends Controller
                         'error'   => $validator->errors(),
                     ],'Email has already been taken.', 500);
                 }
-                
             }
             
             $user = User::create([
@@ -107,9 +106,28 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $data = $request->all();
         
         $user = Auth::user();
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+            'username'          => 'required|unique:user|unique:merchant',
+            'phone_number'      => 'required',
+        ]);
+        if($validator->fails()){
+            if($validator->errors()->first('username')){
+                return ResponseFormatter::error([
+                    'message' => 'Validator Failed',
+                    'error'   => $validator->errors(),
+                ],'Username has already been taken.', 403);
+            }else{
+                return ResponseFormatter::error([
+                    'message' => 'Failed',
+                    'error'   => $validator->errors(),
+                ],'Internal Server Error', 500);
+            }
+        }
         $user->update($data);
 
         return ResponseFormatter::success($user,'Profile Updated');

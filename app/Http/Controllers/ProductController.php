@@ -7,6 +7,7 @@ use App\Models\Merchant;
 use App\Models\ProductPhoto;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class ProductController extends Controller
