@@ -17,6 +17,7 @@ class CommentController extends Controller
         'comment.id_user',
         'comment.id_merchant',
         'comment.id_feed',//input
+        'merchant.username as merchant_username',
         'merchant.name as merchant_name',
         'user.username as user_name',
         'comment.comment',

@@ -9,7 +9,7 @@ use App\Models\Feed;
 use DB;
 class FeedController extends Controller
 {
-    public function showAllFeed(){// By User Followed (Only Merchant)
+    public function showAllFeed($start,$end){// By User Followed (Only Merchant)
         $user = Auth::user();
         $merchantFeed = DB::table('feed')
         ->select(
@@ -19,6 +19,7 @@ class FeedController extends Controller
             'feed.id_product',
             'user.url_photo',
             'user.username',
+            'merchant.username as merchant_username',
             'merchant.name as merchant_name',
             'merchant.merchant_logo',
             'merchant.last_access',
@@ -38,10 +39,7 @@ class FeedController extends Controller
         ->rightJoin('following','feed.id_merchant','following.following') // following merchant
         ->rightJoin('following_user','feed.id_user','following_user.following')//following user
         ->where('feed.paused','!=','1')
-        ->where('product.paused','!=','1')
-        // ->where('following.id_user',$user->id)
-        // ->where('following_user.id_user',$user->id)
-        ;
+        ->where('product.paused','!=','1');
         
         $Feed = DB::table('feed')->orderBy('feed.created_at','DESC')
         ->select(
@@ -51,6 +49,7 @@ class FeedController extends Controller
             'feed.id_product',
             'user.url_photo',
             'user.username',
+            'merchant.username as merchant_username',
             'merchant.name as merchant_name',
             'merchant.merchant_logo',
             'merchant.last_access',
@@ -71,13 +70,14 @@ class FeedController extends Controller
         ->leftJoin('following_user','feed.id_user','following_user.following')
         ->where('feed.paused','!=','1')
         ->where('product.paused','!=','1')
-        //->where('feed.id_user','!=',null)
         ->where('following.id_user',$user->id)//merchant
         ->orWhere('following_user.id_user',$user->id)//other user
         ->union($merchantFeed)
+        ->skip($start)
+        ->take($end)
         ->get();
         
-        return ResponseFormatter::success($Feed,'Show all Feed Followed by '.$user->username);
+        return ResponseFormatter::success($Feed,'Show all Feed Followed by '.$user->username.' total : '.$Feed->count());
     }
     public function createFeed(Request $request){
         $user               = Auth::user()->id;//get user id login
@@ -102,7 +102,7 @@ class FeedController extends Controller
             'feed.id_user',
             'feed.id_merchant',
             'feed.id_product',
-            'user.username as merchant_name',
+            'user.username as merchant_username',
             'user.url_photo as merchant_logo',
             'product.product_name',
             'product.price',
@@ -126,7 +126,7 @@ class FeedController extends Controller
             'feed.id_user',
             'feed.id_merchant',
             'feed.id_product',
-            'merchant.name as merchant_name',
+            'merchant.username as merchant_username',
             'merchant.merchant_logo',
             'merchant.last_access',
             'merchant.description',
@@ -153,7 +153,7 @@ class FeedController extends Controller
             'feed.id_user',
             'feed.id_merchant',
             'feed.id_product',
-            'merchant.name as merchant_name',
+            'merchant.username as merchant_username',
             'merchant.merchant_logo',
             'merchant.last_access',
             'merchant.description',
@@ -177,12 +177,41 @@ class FeedController extends Controller
         return ResponseFormatter::success($datas,'Show Feed By Best Seller And Limit = '.$limit);
     }
     public function showFeedRandom($limit){
-        $datas = DB::table('feed')->orderBy(DB::raw('RAND()'))
+        // $datas = DB::table('feed')->orderBy(DB::raw('RAND()'))
+        // ->select(
+        //     'feed.id',
+        //     'feed.id_user',
+        //     'feed.id_merchant',
+        //     'feed.id_product',
+        //     'merchant.username as merchant_username',
+        //     'merchant.merchant_logo',
+        //     'merchant.last_access',
+        //     'merchant.description',
+        //     'merchant.website',
+        //     'product.product_name',
+        //     'product.price',
+        //     'like_count',
+        //     'url_image',
+        //     'caption',
+        //     'location'
+        // )
+        // ->join('product','product.id','feed.id_product')
+        // ->join('merchant','merchant.id','feed.id_merchant')
+        // ->join('following','feed.id_merchant','following.following')
+        // ->where('feed.paused','!=','1')
+        // ->where('product.paused','!=','1')
+        // ->take($limit)
+        // ->get();
+
+        $merchantFeed = DB::table('feed')
         ->select(
             'feed.id',
             'feed.id_user',
             'feed.id_merchant',
             'feed.id_product',
+            'user.url_photo',
+            'user.username',
+            'merchant.username as merchant_username',
             'merchant.name as merchant_name',
             'merchant.merchant_logo',
             'merchant.last_access',
@@ -190,19 +219,54 @@ class FeedController extends Controller
             'merchant.website',
             'product.product_name',
             'product.price',
-            'like_count',
-            'url_image',
-            'caption',
-            'location'
+            'feed.like_count',
+            'feed.url_image',
+            'feed.caption',
+            'feed.location',
+            'feed.created_at'
         )
-        ->join('product','product.id','feed.id_product')
-        ->join('merchant','merchant.id','feed.id_merchant')
-        ->join('following','feed.id_merchant','following.following')
+        ->rightjoin('product','product.id','feed.id_product')
+        ->rightJoin('merchant','merchant.id','feed.id_merchant')
+        ->rightjoin('user','feed.id_user','user.id')
+        ->rightJoin('following','feed.id_merchant','following.following') // following merchant
+        ->rightJoin('following_user','feed.id_user','following_user.following')//following user
+        ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1');
+        
+        $Feed = DB::table('feed')->orderBy(DB::raw('RAND()'))
+        ->select(
+            'feed.id',
+            'feed.id_user',
+            'feed.id_merchant',
+            'feed.id_product',
+            'user.url_photo',
+            'user.username',
+            'merchant.username as merchant_username',
+            'merchant.name as merchant_name',
+            'merchant.merchant_logo',
+            'merchant.last_access',
+            'merchant.description',
+            'merchant.website',
+            'product.product_name',
+            'product.price',
+            'feed.like_count',
+            'feed.url_image',
+            'feed.caption',
+            'feed.location',
+            'feed.created_at'
+        )
+        ->leftjoin('product','product.id','feed.id_product')
+        ->leftJoin('merchant','merchant.id','feed.id_merchant')
+        ->leftJoin('user','feed.id_user','user.id')
+        ->leftJoin('following','feed.id_merchant','following.following')
+        ->leftJoin('following_user','feed.id_user','following_user.following')
         ->where('feed.paused','!=','1')
         ->where('product.paused','!=','1')
+        ->union($merchantFeed)
+        // ->skip($start)
         ->take($limit)
         ->get();
-        return ResponseFormatter::success($datas,'Show Feed Random And Limit = '.$limit);
+        return ResponseFormatter::success($Feed,'Show Feed Random And Limit = '.$limit);
     }
 
     public function showFeedByUserId($id){

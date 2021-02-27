@@ -14,18 +14,11 @@ class MerchantCategoryController extends Controller
 {
     public function showMerchantDisplayById(){
         $data = DB::table('merchant_category')
+        ->where('hide','!=','1')
         ->get();
         return ResponseFormatter::success($data,'Show Merchant Category by id merchant Category');
     }
     public function showProductByMerchantCategory($ids){
-        // $photo = DB::table('product')
-        // ->select('product_photo.url_photo')
-        // ->join('product_photo','product_photo.id_product','product.id')
-        // ->where('product.id',6)
-        // ->pluck('product_photo.url_photo')->all();
-
-        // return $photo;
-        //$photo = ['www','wpwpwpwp'];
         $datas = DB::table('product')
         ->select('product.id',
         'product_category.category_name as category',
@@ -50,48 +43,7 @@ class MerchantCategoryController extends Controller
         ->where('product.paused','!=','1')
         ->where('merchant.id_merchant_category',$ids)
         ->get();
-
-        // function($query){
-        //     $query->select('url_photo')
-        //     ->from('product_photo')
-        //     ->where('product_photo.product_id','product.id')
-        //     ->pluck('product_photo.url_photo')
-        //     ->all();
-        // }
-        
-        // return $datas;
-        // $getAll = [];
-        // foreach($datas as $data)
-        // {
-        //     //get Array Photo
-        //     $photo = [];
-        //     foreach($data->getPhoto as $keys => $getPhotos) {
-        //         $photo[$keys] = $getPhotos->url_photo;
-        //     }
-        //     array_push($getAll,[
-        //         'id'               =>$data->id,
-        //         'category'         =>$data->getCategory->category_name,
-        //         'merchant_id'      =>$data->getMerchant->id,
-        //         'website'          =>$data->getMerchant->website,
-        //         'merchant'         =>$data->getMerchant->name,
-        //         'merchant_location'=>$data->getMerchant->province,
-        //         'merchant_logo'    =>$data->getMerchant->merchant_logo,
-        //         'id_province'      =>$data->getMerchant->id_province,
-        //         'id_city'          =>$data->getMerchant->id_city,
-        //         'product_name'     =>$data->product_name,
-        //         'description'      =>$data->description,
-        //         'price'            =>$data->price,
-        //         'color'            =>$data->color,
-        //         'size'             =>$data->size,
-        //         'stock'            =>$data->stock,
-        //         'weight'           =>$data->weight,
-        //         'created_at'       =>$data->created_at,
-        //         'updated_at'       =>$data->updated_at,
-        //         'report_count'     =>$data->report_count,
-        //         'preview'          =>$getPhotos->url_photo ??'',
-        //         'photo'            =>$photo,
-        //         ]);
-            return ResponseFormatter::success($datas,'Show Product By Merchant Category');
+        return ResponseFormatter::success($datas,'Show Product By Merchant Category');
         
     }
 }

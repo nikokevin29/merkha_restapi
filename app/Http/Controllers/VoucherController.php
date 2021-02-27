@@ -19,6 +19,7 @@ class VoucherController extends Controller
         foreach($data as $d){
             array_push($getAll,[
             'id'               =>$d->id,
+            'id_merchant'      =>$d->id_merchant,
             'merchant'         =>$d->getMerchant->firstWhere('id',$d->id_merchant)->name,
             'merchant_logo'    =>$d->getMerchant->firstWhere('id',$d->id_merchant)->merchant_logo,
             'voucher_name'     =>$d->voucher_name,
@@ -65,10 +66,11 @@ class VoucherController extends Controller
         }
         if($query->voucher_quantity == 0){
             return ResponseFormatter::error($query, 'Voucher Sold Out', 406);
-        }else if($query->max_usage == 0){
-            return ResponseFormatter::error($query, 'Voucher Reach Max Usage', 406);
         }
-        $query->decrement('max_usage');
+        // else if($query->max_usage == 0){
+        //     return ResponseFormatter::error($query, 'Voucher Reach Max Usage', 406);
+        // }
+        //$query->decrement('max_usage');
         $query->decrement('voucher_quantity');
         return ResponseFormatter::success($query,'Voucher Used');
 

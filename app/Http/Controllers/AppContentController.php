@@ -8,7 +8,11 @@ use App\Models\AppContent;
 class AppContentController extends Controller
 {
     public function showMainAppContent(){
-        $data =  AppContent::where('location','=','Main Page')->select('url_image')->pluck('url_image')->toArray();
+        $data =  AppContent::where('location','=','Main Page')
+        ->where('hide','!=','1')
+        ->select('url_image')
+        ->pluck('url_image')
+        ->toArray();
         return $data;
     }
 }

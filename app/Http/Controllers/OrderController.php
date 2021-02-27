@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function showOrderbyUserLogin(){
         $user = Auth::user()->id;
         $data = Order::where('id_buyer',$user)
-        ->whereNotIn('order_status',['FINISHED'])
+        //->whereNotIn('order_status',['FINISHED'])
         ->orderBy('updated_at', 'DESC')
         ->get();
         $getAll = [];
@@ -118,6 +118,21 @@ class OrderController extends Controller
         $id->id_voucher = $request->id_voucher;
         $id->save();
         return ResponseFormatter::success($id,'Voucher Edited');
+    }
+    public function isExpiredOrder(Request $request){
+        $userId = Auth::user()->id;
+        $order =  Order::where('id_buyer',$userId)
+        ->where('order_status','WAITING FOR PAYMENT')
+        ->get();
+        foreach($order as $ord){
+            if($ord->created_at->addDays(1) <= Carbon::now()){
+                $idTemp   = Order::find($ord->id);
+                $idTemp->order_status = 'CANCELLED';
+                $idTemp->save();
+            }
+            
+        }
+        return ResponseFormatter::success($order,'Expired Passed');
     }
 
 

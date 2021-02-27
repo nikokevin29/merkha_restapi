@@ -21,6 +21,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MerchantCategoryController;
 use App\Http\Controllers\AppContentController;
 use App\Http\Controllers\FollowingUserController;
+use App\Http\Controllers\ReviewMerchantController;
+use App\Http\Controllers\ReviewProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +56,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('user', [UserController::class ,'updateProfile']);
     Route::post('user/photo', [UserController::class ,'updatePhoto']);
     Route::post('logout', [UserController::class ,'logout']);
-    Route::get('user/{id}',[UserController::class,'getUserById']);
+    Route::get('users/{id}',[UserController::class,'getUserById']);
 
     Route::post('user/interest/{value}', [UserInterestController::class ,'add_user_interest']);
     Route::get('user/interest/show', [UserInterestController::class ,'show_user_interest']);
@@ -98,6 +100,8 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::put('order/editstatus/{id}',[OrderController::class,'editStatus']);
     Route::put('order/editvoucher/{id}',[OrderController::class,'editVoucher']);
 
+    Route::get('order/isExpired',[OrderController::class,'isExpiredOrder']);
+
     //Detail Order
     Route::get('orderdetail/show/{id_order}',[OrderDetailController::class,'showDetailOrder']);
     Route::post('orderdetail/create',[OrderDetailController::class,'createDetailOrder']);
@@ -107,7 +111,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('payment/create',[PaymentController::class,'createPayment']);
 
     //Feed Posting
-    Route::get('feed/showall',[FeedController::class,'showAllFeed']);
+    Route::get('feed/showall/{start}/{end}',[FeedController::class,'showAllFeed']);
     Route::get('feed/showownfeed',[FeedController::class,'showOwnFeed']);
     Route::post('feed/create',[FeedController::class,'createFeed']);
     Route::put('feed/editFeed/{id}',[FeedController::class,'editFeed']);
@@ -137,11 +141,26 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('following/countFollowingUser',[FollowingController::class,'countFollowingUser']);
 
     //Following User
+    Route::get('followinguser/countfollowinguser/{id}',[FollowingUserController::class,'countFollowersUser']);
     Route::get('followinguser/countfollowersuser/{id}',[FollowingUserController::class,'countFollowersUser']);
+
+    
+    Route::get('followinguser/follow/{id}',[FollowingUserController::class,'follow']);
+    Route::get('followinguser/unfollow/{id}',[FollowingUserController::class,'unfollow']);
+    Route::get('followinguser/checkstatus/{id}',[FollowingUserController::class,'checkStatus']);
 
     //Merchant Category
     Route::get('merchant_category/showall/',[MerchantCategoryController::class,'showMerchantDisplayById']);
     Route::get('merchant_category/showbyid/{id}',[MerchantCategoryController::class,'showProductByMerchantCategory']);
+
+    //Review Merchant
+    Route::get('review_merchant/showbyidmerchant/{idMerchant}',[ReviewMerchantController::class,'getReviewByIdMerchant']);
+    Route::post('review_merchant/create',[ReviewMerchantController::class,'createReviewMerchant']);
+    Route::get('review_merchant/avgreview/{idMerchant}',[ReviewMerchantController::class,'countAverageReviewMerchant']);
+    Route::get('check_review_merchant/{idMerchant}',[ReviewMerchantController::class,'checkReviewMerchantDone']);
+    //Review Product
+    Route::post('review_product/create',[ReviewProductController::class,'createReviewProduct']);
+    Route::get('review_product/showbyidproduct/{idProduct}',[ReviewProductController::class,'getReviewByIdProduct']);
 
     //App Content
     Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);

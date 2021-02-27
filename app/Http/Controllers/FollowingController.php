@@ -42,17 +42,9 @@ class FollowingController extends Controller
         ->where('following',$id_merchant)
         ->first();
         if(empty($check)){
-            // return ResponseFormatter::error([
-            //     'id' => null,
-            //     'following'=> null,
-            //     'message' => 'Merchant Not Found',
-            //     'error' => $check,
-            // ],'Merchant Not Found', 404);
             return 0;
         }
         return $check->following;
-        return ResponseFormatter::success($check,'Check Done');
-
     }
     //note: return not Formated( just number)
     public function countFollowersMerchant($idMerchant){
