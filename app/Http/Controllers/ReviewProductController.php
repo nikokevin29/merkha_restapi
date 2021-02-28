@@ -36,5 +36,8 @@ class ReviewProductController extends Controller
             ->get();
         return ResponseFormatter::success($data,'Show Review By idProduct  '.$idProduct);
     }
-
+    public function avgReviewPerMerchant(Request $request,$id_product){
+        $data = ReviewProduct::where('id_product','=',$id_product)->avg('stars');
+        return $data;
+    }
 }

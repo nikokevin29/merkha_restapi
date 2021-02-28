@@ -25,6 +25,7 @@ use App\Http\Controllers\ReviewMerchantController;
 use App\Http\Controllers\ReviewProductController;
 use App\Http\Controllers\ReportProductController;
 use App\Http\Controllers\ReportFeedController;
+use App\Http\Controllers\OperationalHoursController;
 
 /*
 |--------------------------------------------------------------------------
@@ -163,6 +164,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     //Review Product
     Route::post('review_product/create',[ReviewProductController::class,'createReviewProduct']);
     Route::get('review_product/showbyidproduct/{idProduct}',[ReviewProductController::class,'getReviewByIdProduct']);
+    Route::get('review_product/avg/{id_product}',[ReviewProductController::class,'avgReviewPerMerchant']);
 
     //Report Product
     Route::post('report_product/create',[ReportProductController::class,'createReportProduct']);
@@ -173,6 +175,9 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('report_feed/create',[ReportFeedController::class,'createReportFeed']);
     Route::delete('report_feed/delete/{id_feed}',[ReportFeedController::class,'deleteReportFeed']);
     Route::get('report_feed/check/{id_feed}',[ReportFeedController::class,'checkReportFeed']);
+    
+    //Operational Hours
+    Route::get('operational_hours/get/{idMerchant}',[OperationalHoursController::class,'getOperational']);
 
     //App Content
     Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);
