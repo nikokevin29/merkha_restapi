@@ -442,5 +442,10 @@ class ProductController extends Controller
         return ResponseFormatter::success($getAll,'Seach By Product Name '.$productName);
     }
 
+    public function increaseViewProduct($id,Request $request){
+        Product::where('id',$id)->increment('viewed',1);
+        return null;
+    }
+
     
 }

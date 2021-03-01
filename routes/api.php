@@ -26,6 +26,7 @@ use App\Http\Controllers\ReviewProductController;
 use App\Http\Controllers\ReportProductController;
 use App\Http\Controllers\ReportFeedController;
 use App\Http\Controllers\OperationalHoursController;
+use App\Http\Controllers\MerchantBannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('product/showbestsellerbymerchant/{id}',[ProductController::class,'showBestSellerById']);
 
     Route::get('product/searchproductbymerchant/{productName}/{idMerchant}',[ProductController::class,'searchProductByMerchant']);
+    Route::get('product/increaseview/{id}',[ProductController::class,'increaseViewProduct']);
 
     //Merchant
     Route::get('merchant/showbyrandom/{limit}',[MerchantController::class,'showByRandom']);
@@ -181,7 +183,11 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
 
     //App Content
     Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);
+    Route::get('app_content/merchant_category/{id_merchant_category}',[AppContentController::class,'showMerchantCategoryAppContent']);
+    //App Content Merchant
+    Route::get('app_content/merchant/{id_merchant}',[MerchantBannerController::class,'getMerchBanner']);
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
+    //php artisan key:generate kalo instal env baru
 
     //TODO: Carousel per Merchant App Content
 });

@@ -154,12 +154,14 @@ class FeedController extends Controller
             'feed.id_merchant',
             'feed.id_product',
             'merchant.username as merchant_username',
+            'merchant.name as merchant_name',
             'merchant.merchant_logo',
             'merchant.last_access',
             'merchant.description',
             'merchant.website',
             'product.product_name',
             'product.price',
+            'product.paused',
             'like_count',
             'url_image',
             'caption',
@@ -177,31 +179,6 @@ class FeedController extends Controller
         return ResponseFormatter::success($datas,'Show Feed By Best Seller And Limit = '.$limit);
     }
     public function showFeedRandom($limit){
-        // $datas = DB::table('feed')->orderBy(DB::raw('RAND()'))
-        // ->select(
-        //     'feed.id',
-        //     'feed.id_user',
-        //     'feed.id_merchant',
-        //     'feed.id_product',
-        //     'merchant.username as merchant_username',
-        //     'merchant.merchant_logo',
-        //     'merchant.last_access',
-        //     'merchant.description',
-        //     'merchant.website',
-        //     'product.product_name',
-        //     'product.price',
-        //     'like_count',
-        //     'url_image',
-        //     'caption',
-        //     'location'
-        // )
-        // ->join('product','product.id','feed.id_product')
-        // ->join('merchant','merchant.id','feed.id_merchant')
-        // ->join('following','feed.id_merchant','following.following')
-        // ->where('feed.paused','!=','1')
-        // ->where('product.paused','!=','1')
-        // ->take($limit)
-        // ->get();
 
         $merchantFeed = DB::table('feed')
         ->select(
