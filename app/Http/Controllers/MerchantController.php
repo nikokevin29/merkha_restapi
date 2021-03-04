@@ -97,6 +97,7 @@ class MerchantController extends Controller
             'active_status')
         ->where('merchant.paused','!=','1')
         ->where('merchant.name','like', "%{$merchantName}%")
+        ->orWhere('merchant.username','like', "%{$merchantName}%")
         ->get();
         return ResponseFormatter::success($datas,'Seach By Merchant Name ');
     }

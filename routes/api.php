@@ -27,6 +27,7 @@ use App\Http\Controllers\ReportProductController;
 use App\Http\Controllers\ReportFeedController;
 use App\Http\Controllers\OperationalHoursController;
 use App\Http\Controllers\MerchantBannerController;
+use App\Http\Controllers\FeedLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('user/photo', [UserController::class ,'updatePhoto']);
     Route::post('logout', [UserController::class ,'logout']);
     Route::get('users/{id}',[UserController::class,'getUserById']);
+    Route::put('username/update',[UserController::class,'updateUsername']);
 
     Route::post('user/interest/{value}', [UserInterestController::class ,'add_user_interest']);
     Route::get('user/interest/show', [UserInterestController::class ,'show_user_interest']);
@@ -184,8 +186,17 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     //App Content
     Route::get('app_content/main_page',[AppContentController::class,'showMainAppContent']);
     Route::get('app_content/merchant_category/{id_merchant_category}',[AppContentController::class,'showMerchantCategoryAppContent']);
+    Route::get('app_content/main_page_format',[AppContentController::class,'showMainAppContentFormat']);
+    
+    //Feed Like
+    Route::post('feed_like/create/{id_feed}',[FeedLikeController::class,'create']);
+    Route::delete('feed_like/delete/{id_feed}',[FeedLikeController::class,'delete']);
+    Route::get('feed_like/check/{id_feed}',[FeedLikeController::class,'check']);
+    
     //App Content Merchant
     Route::get('app_content/merchant/{id_merchant}',[MerchantBannerController::class,'getMerchBanner']);
+
+
     //php artisan serve --host 0.0.0.0 for Emulator Android Windows
     //php artisan key:generate kalo instal env baru
 

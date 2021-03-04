@@ -109,29 +109,49 @@ class UserController extends Controller
         
         $user = Auth::user();
         $data = $request->all();
-        $validator = Validator::make($data, [
-            'first_name'        => 'required',
-            'last_name'         => 'required',
-            'username'          => 'required|unique:user|unique:merchant',
-            'phone_number'      => 'required',
-        ]);
-        if($validator->fails()){
-            if($validator->errors()->first('username')){
-                return ResponseFormatter::error([
-                    'message' => 'Validator Failed',
-                    'error'   => $validator->errors(),
-                ],'Username has already been taken.', 403);
-            }else{
-                return ResponseFormatter::error([
-                    'message' => 'Failed',
-                    'error'   => $validator->errors(),
-                ],'Internal Server Error', 500);
-            }
-        }
+        // $validator = Validator::make($data, [
+        //     'first_name'        => 'required',
+        //     'last_name'         => 'required',
+        //     'username'          => 'required|unique:user|unique:merchant',
+        //     'phone_number'      => 'required',
+        // ]);
+        // if($validator->fails()){
+        //     if($validator->errors()->first('username')){
+        //         return ResponseFormatter::error([
+        //             'id' => null,
+        //             'message' => 'Validator Failed',
+        //             'error'   => $validator->errors(),
+        //         ],'Username has already been taken.', 403);
+        //     }else{
+        //         return ResponseFormatter::error([
+        //             'id' => null,
+        //             'message' => 'Failed',
+        //             'error'   => $validator->errors(),
+        //         ],'Internal Server Error', 500);
+        //     }
+        // }
         $user->update($data);
 
         return ResponseFormatter::success($user,'Profile Updated');
 
+    }
+    public function updateUsername(Request $request){
+        $user = Auth::user();
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'username'          => 'required|unique:user|unique:merchant',
+        ]);
+        if($validator->fails()){
+            if($validator->errors()->first('username')){
+                return ResponseFormatter::error(null,'Username has already been taken.', 403);
+            }else{
+                return ResponseFormatter::error(
+                    null
+                ,'Internal Server Error', 500);
+            }
+        }
+        $user->update($data);
+        return ResponseFormatter::success($user,'Username Updated');
     }
 
     public function updatePhoto(Request $request){

@@ -315,6 +315,9 @@ class ProductController extends Controller
                 'photo'            =>$photo,
                 ]);
         }   
+        if($getAll == []){
+            $getAll = null;
+        }
         return ResponseFormatter::success($getAll,'Show By Id '.$id);
     }
     public function showByMerchantCategory($id){
