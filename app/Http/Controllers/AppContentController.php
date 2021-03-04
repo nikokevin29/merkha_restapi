@@ -43,4 +43,7 @@ class AppContentController extends Controller
         ->get();
         return $data;
     }
+    public function getBanner(){
+        return AppContent::where('parent','Background Banner')->pluck('url_image')->first();
+    }
 }

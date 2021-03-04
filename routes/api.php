@@ -53,6 +53,9 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class,'verify']
 
 Route::get('product/category/show',[ProductCategoryController::class,'show']);
 Route::get('product/category/showname',[ProductCategoryController::class,'showNameOnly']);
+
+//Background Banner Mobile
+Route::get('banner',[AppContentController::class,'getBanner']);
 //Login Required
 Route::group(['middleware' => 'auth:api','verified'], function(){
     //Account
