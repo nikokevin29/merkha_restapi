@@ -22,11 +22,12 @@ class OrderDetailController extends Controller
         ->select(
             'order_detail.id',
             'order_detail.id_order',
+            'order_detail.product_price',
             'order_detail.id_product',
             'order_detail.amount',
             'order_detail.subtotal',
             'product.product_name',
-            'product.price',
+            //'product.price',
         )
         ->join('product','product.id','order_detail.id_product')
         ->where('id_order',$id_order)

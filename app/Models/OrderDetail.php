@@ -16,5 +16,6 @@ class OrderDetail extends Model
         'id_product',
         'amount',
         'subtotal',
+        'product_price'
     ];
 }
