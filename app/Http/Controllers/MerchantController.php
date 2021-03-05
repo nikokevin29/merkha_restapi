@@ -84,6 +84,7 @@ class MerchantController extends Controller
             'user.id as id_user',
             'merchant.id as id_merchant',
             'merchant.name',
+            'merchant.username',
             'merchant.merchant_logo',
             'merchant.description',
             'province',
