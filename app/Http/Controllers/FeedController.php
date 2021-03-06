@@ -42,7 +42,7 @@ class FeedController extends Controller
         //->where('product.paused','!=','1')
         ;
         
-        $Feed = DB::table('feed')->orderBy('feed.created_at','DESC')
+        $Feed = DB::table('feed')
         ->select(
             'feed.id',
             'feed.id_user',
@@ -75,10 +75,9 @@ class FeedController extends Controller
         ->orWhere('following_user.id_user',$user->id)//other user
         ->union($merchantFeed)
         ->skip($start)
-        ->take($end)
-        ->get();
+        ->take($end);
         
-        return ResponseFormatter::success($Feed,'Show all Feed Followed by '.$user->username.' total : '.$Feed->count());
+        return ResponseFormatter::success($Feed->orderBy('created_at','DESC')->get(),'Show all Feed Followed by '.$user->username.' total : '.$Feed->count());
     }
     public function createFeed(Request $request){
         $user               = Auth::user()->id;//get user id login
@@ -97,7 +96,7 @@ class FeedController extends Controller
     }
     public function showOwnFeed(Request $request){
         $user = Auth::user();
-        $data = DB::table('feed')
+        $data = DB::table('feed')->orderBy('feed.created_at','DESC')
         ->select(
             'feed.id',
             'feed.id_user',
@@ -110,15 +109,15 @@ class FeedController extends Controller
             'like_count',
             'url_image',
             'caption',
-            'location'
+            'location',
+            'feed.created_at'
         )
         ->leftjoin('product','product.id','feed.id_product')
         ->join('user','user.id','feed.id_user')
         //->Where('product.paused','!=','1')
-        ->where('feed.id_user',$user->id)
-        ->orderBy('feed.created_at','DESC');
+        ->where('feed.id_user',$user->id);
 
-        $datas = DB::table('feed')
+        $datas = DB::table('feed')->orderBy('feed.created_at','DESC')
         ->select(
             'feed.id',
             'feed.id_user',
@@ -131,17 +130,16 @@ class FeedController extends Controller
             'like_count',
             'url_image',
             'caption',
-            'location'
+            'location',
+            'feed.created_at'
         )
         ->rightjoin('product','product.id','feed.id_product')
         ->join('user','user.id','feed.id_user')
         //->where('product.paused','!=','1')
         ->where('feed.paused','!=','1')
         ->where('feed.id_user',$user->id)
-        ->orderBy('feed.created_at','DESC')
-        ->union($data)
-        ->get();
-        return ResponseFormatter::success($datas,'Show all Feed Own of '.$user->username);
+        ->union($data);
+        return ResponseFormatter::success($datas->orderBy('created_at','DESC')->get(),'Show all Feed Own of '.$user->username);
     }
     public function showMerchantFeedById($id){
         $datas = DB::table('feed')->orderBy('feed.created_at','DESC')
