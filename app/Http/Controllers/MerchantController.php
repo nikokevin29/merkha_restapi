@@ -26,6 +26,7 @@ class MerchantController extends Controller
             'last_access',
             'active_status')
         ->where('merchant.paused','!=','1')
+        ->where('waiting_status','!=','1')
         ->limit($limit)
         ->inRandomOrder()
         ->get();
@@ -50,6 +51,7 @@ class MerchantController extends Controller
             'last_access',
             'active_status')
         ->where('merchant.paused','!=','1')
+        ->where('waiting_status','!=','1')
         ->where('user.id','=',$id)
         ->get();
         return ResponseFormatter::success($datas,'Show Merchant By '.$id); 
@@ -73,6 +75,7 @@ class MerchantController extends Controller
             'last_access',
             'active_status')
         ->where('merchant.paused','!=','1')
+        ->where('waiting_status','!=','1')
         ->where('merchant.id',$id)
         ->get();
         return ResponseFormatter::success($datas,'Show Merchant By Id '.$id); 
@@ -96,9 +99,16 @@ class MerchantController extends Controller
             'merchant.updated_at',
             'last_access',
             'active_status')
-        ->where('merchant.paused','!=','1')
-        ->where('merchant.name','like', "%{$merchantName}%")
-        ->orWhere('merchant.username','like', "%{$merchantName}%")
+        ->where([
+            ['merchant.paused','!=','1'],
+            ['waiting_status','!=','1'],
+            ['merchant.name','like', "%{$merchantName}%"]
+        ])
+        ->orWhere([
+            ['merchant.paused','!=','1'],
+            ['waiting_status','!=','1'],
+            ['merchant.username','like', "%{$merchantName}%"]
+        ])
         ->get();
         return ResponseFormatter::success($datas,'Seach By Merchant Name ');
     }

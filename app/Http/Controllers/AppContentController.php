@@ -10,6 +10,7 @@ class AppContentController extends Controller
     public function showMainAppContent(){
         $data =  AppContent::where('location','=','Main Page')
         ->where('hide','!=','1')
+        ->where('parent','Hero Banner')
         ->select('url_image')
         ->pluck('url_image')
         ->toArray();
@@ -25,6 +26,7 @@ class AppContentController extends Controller
         
         $data = AppContent::where('location','=','Main Page')
         ->where('hide','!=','1')
+        ->where('parent','Hero Banner')
         ->select('id','id_merchant','url_image')
         ->get();
         return $data;
@@ -39,6 +41,7 @@ class AppContentController extends Controller
 
         $data = AppContent::where('id_merchant_category','=',$id_merchant_category)
         ->where('hide','!=','1')
+        ->where('parent','!=','Background Banner')
         ->select('id','id_merchant','url_image')
         ->get();
         return $data;

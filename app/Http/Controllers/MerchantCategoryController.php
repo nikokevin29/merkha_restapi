@@ -40,6 +40,7 @@ class MerchantCategoryController extends Controller
         ->join('merchant','merchant.id','product.id_merchant')
         ->join('product_category','product_category.id','product.id_category')
         ->join('product_photo','product_photo.id','product.id')
+        ->where('waiting_status','=','0')
         ->where('product.paused','!=','1')
         ->where('merchant.id_merchant_category',$ids)
         ->get();
