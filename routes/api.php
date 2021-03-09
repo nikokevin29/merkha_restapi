@@ -28,6 +28,7 @@ use App\Http\Controllers\ReportFeedController;
 use App\Http\Controllers\OperationalHoursController;
 use App\Http\Controllers\MerchantBannerController;
 use App\Http\Controllers\FeedLikeController;
+use App\Http\Controllers\WishlistSavedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -195,6 +196,11 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::post('feed_like/create/{id_feed}',[FeedLikeController::class,'create']);
     Route::delete('feed_like/delete/{id_feed}',[FeedLikeController::class,'delete']);
     Route::get('feed_like/check/{id_feed}',[FeedLikeController::class,'check']);
+
+    //Wishlist Status
+    Route::post('wishlist_saved/create/{id_product}',[WishlistSavedController::class,'create']);
+    Route::delete('wishlist_saved/delete/{id_product}',[WishlistSavedController::class,'delete']);
+    Route::get('wishlist_saved/check/{id_product}',[WishlistSavedController::class,'check']);
     
     //App Content Merchant
     Route::get('app_content/merchant/{id_merchant}',[MerchantBannerController::class,'getMerchBanner']);

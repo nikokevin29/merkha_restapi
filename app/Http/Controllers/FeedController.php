@@ -232,7 +232,7 @@ class FeedController extends Controller
         ->where('feed.paused','!=','1')
         ->where('product.paused','!=','1');
         
-        $Feed = DB::table('feed')->orderBy(DB::raw('RAND()'))
+        $Feed = DB::table('feed')
         ->select(
             'feed.id',
             'feed.id_user',
@@ -263,9 +263,8 @@ class FeedController extends Controller
         ->where('product.paused','!=','1')
         ->union($merchantFeed)
         // ->skip($start)
-        ->take($limit)
-        ->get();
-        return ResponseFormatter::success($Feed,'Show Feed Random And Limit = '.$limit);
+        ->take($limit);
+        return ResponseFormatter::success($Feed->orderBy(DB::raw('RAND()'))->get(),'Show Feed Random And Limit = '.$limit);
     }
 
     public function showFeedByUserId($id){

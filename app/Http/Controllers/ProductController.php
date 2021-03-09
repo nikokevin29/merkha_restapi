@@ -323,18 +323,15 @@ class ProductController extends Controller
     public function showByMerchantCategory($id){
         $product = Product::where('merchant.id_merchant_category',$id)
         ->join('merchant','product.id_merchant','merchant.id')
+        ->join('product_photo','product.id','product_photo.id_product')
         ->where('product.paused','!=','1')
+        ->groupBy('product_photo.id_product')
         ->get();
         $getAll = [];
         foreach($product as $data)
         {
-            //get Array Photo
-            $photo = [];
-            foreach($data->getPhoto as $keys => $getPhotos) {
-                $photo[$keys] = $getPhotos->url_photo;
-            }
             array_push($getAll,[
-                'id'               =>$data->id,
+                'id'               =>$data->id_product,
                 'category'         =>$data->getCategory->category_name,
                 'merchant_id'      =>$data->getMerchant->id,
                 'website'          =>$data->getMerchant->website,
@@ -344,7 +341,7 @@ class ProductController extends Controller
                 'id_province'      =>$data->getMerchant->id_province,
                 'id_city'          =>$data->getMerchant->id_city,
                 'product_name'     =>$data->product_name,
-                'description'      =>$data->description,
+                'description'      =>Product::where('id',$data->id_product)->pluck('description')->first(),
                 'price'            =>$data->price,
                 'color'            =>$data->color,
                 'size'             =>$data->size,
@@ -353,11 +350,11 @@ class ProductController extends Controller
                 'created_at'       =>$data->created_at,
                 'updated_at'       =>$data->updated_at,
                 'report_count'     =>$data->report_count,
-                'preview'          =>$getPhotos->url_photo ??'',
-                'photo'            =>$photo,
+                'preview'          =>ProductPhoto::where('id_product',$data->id_product)->pluck('url_photo')->first(),
+                'photo'            =>ProductPhoto::where('id_product',$data->id_product)->pluck('url_photo')->toArray(),
                 ]);
         } 
-        return ResponseFormatter::success($getAll,'Show By Merchant Category' . $id);
+        return ResponseFormatter::success($getAll,'Show By Merchant Category');
     }
     public function showBestSellerById($id){
         $datas = Product::query()
