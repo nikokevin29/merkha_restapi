@@ -353,7 +353,7 @@ class ProductController extends Controller
                 'preview'          =>ProductPhoto::where('id_product',$data->id_product)->pluck('url_photo')->first(),
                 'photo'            =>ProductPhoto::where('id_product',$data->id_product)->pluck('url_photo')->toArray(),
                 ]);
-        } 
+        }
         return ResponseFormatter::success($getAll,'Show By Merchant Category');
     }
     public function showBestSellerById($id){

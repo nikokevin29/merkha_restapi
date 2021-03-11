@@ -131,6 +131,7 @@ Route::group(['middleware' => 'auth:api','verified'], function(){
     Route::get('feed/showbestseller/{limit}',[FeedController::class,'showFeedBestSellerProduct']);
     Route::get('feed/showrandom/{limit}',[FeedController::class,'showFeedRandom']);
     Route::get('feed/showbyuserid/{id}',[FeedController::class,'showFeedByUserId']);
+    Route::get('feed/showfeedbymerchantcategory/{id}',[FeedController::class,'showFeedByMerchantCategory']);
 
     //Comment
     Route::get('comment/showcommentbyid/{id_feed}',[CommentController::class,'showComment']);

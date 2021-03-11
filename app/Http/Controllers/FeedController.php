@@ -292,4 +292,70 @@ class FeedController extends Controller
         return ResponseFormatter::success($datas,'Show all Feed By Specific User');
     }
 
+    public function showFeedByMerchantCategory($id){
+        $merchantFeed = DB::table('feed')
+        ->select(
+            'feed.id',
+            'feed.id_user',
+            'feed.id_merchant',
+            'feed.id_product',
+            'user.url_photo',
+            'user.username',
+            'merchant.username as merchant_username',
+            'merchant.name as merchant_name',
+            'merchant.merchant_logo',
+            'merchant.last_access',
+            'merchant.description',
+            'merchant.website',
+            'product.product_name',
+            'product.price',
+            'feed.like_count',
+            'feed.url_image',
+            'feed.caption',
+            'feed.location',
+            'feed.created_at'
+        )
+        ->rightjoin('product','product.id','feed.id_product')
+        ->rightJoin('merchant','merchant.id','feed.id_merchant')
+        ->rightjoin('user','feed.id_user','user.id')
+        ->rightJoin('following','feed.id_merchant','following.following') // following merchant
+        ->rightJoin('following_user','feed.id_user','following_user.following')//following user
+        ->where('feed.paused','!=','1')
+        ->where('merchant.id_merchant_category',$id)
+        ->where('product.paused','!=','1');
+        
+        $Feed = DB::table('feed')
+        ->select(
+            'feed.id',
+            'feed.id_user',
+            'feed.id_merchant',
+            'feed.id_product',
+            'user.url_photo',
+            'user.username',
+            'merchant.username as merchant_username',
+            'merchant.name as merchant_name',
+            'merchant.merchant_logo',
+            'merchant.last_access',
+            'merchant.description',
+            'merchant.website',
+            'product.product_name',
+            'product.price',
+            'feed.like_count',
+            'feed.url_image',
+            'feed.caption',
+            'feed.location',
+            'feed.created_at'
+        )
+        ->leftjoin('product','product.id','feed.id_product')
+        ->leftJoin('merchant','merchant.id','feed.id_merchant')
+        ->leftJoin('user','feed.id_user','user.id')
+        ->leftJoin('following','feed.id_merchant','following.following')
+        ->leftJoin('following_user','feed.id_user','following_user.following')
+        ->where('feed.paused','!=','1')
+        ->where('product.paused','!=','1')
+        ->where('merchant.id_merchant_category',$id)
+        ->union($merchantFeed);
+        return ResponseFormatter::success($Feed->orderBy(DB::raw('RAND()'))->get(),'Show By Merchant Category');
+    }
+
 }
