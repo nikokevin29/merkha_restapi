@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function showOrderbyUserLogin(){
         $user = Auth::user()->id;
         $data = Order::where('id_buyer',$user)
-        //->whereNotIn('order_status',['FINISHED'])
+        ->whereNotIn('order_status',['FINISHED'])
         ->orderBy('updated_at', 'DESC')
         ->get();
         $getAll = [];
