@@ -16,6 +16,6 @@ class FollowingUser extends Model
     ];
     protected $fillable = [
         'id_user',
-        'following', // id_user
+        'following_users', // id_user
     ];
 }

@@ -37,7 +37,7 @@ class FeedController extends Controller
         ->rightJoin('merchant','merchant.id','feed.id_merchant')
         ->rightjoin('user','feed.id_user','user.id')
         ->rightJoin('following','feed.id_merchant','following.following') // following merchant
-        ->rightJoin('following_user','feed.id_user','following_user.following')//following user
+        ->rightJoin('following_user','feed.id_user','following_user.following_users')//following user
         ->where('feed.paused','!=','1')
         //->where('product.paused','!=','1')
         ;
@@ -68,7 +68,7 @@ class FeedController extends Controller
         ->leftJoin('merchant','merchant.id','feed.id_merchant')
         ->leftJoin('user','feed.id_user','user.id')
         ->leftJoin('following','feed.id_merchant','following.following')
-        ->leftJoin('following_user','feed.id_user','following_user.following')
+        ->leftJoin('following_user','feed.id_user','following_user.following_users')
         ->where('feed.paused','!=','1')
         //->where('product.paused','!=','1')
         ->where('following.id_user',$user->id)//merchant
@@ -228,7 +228,7 @@ class FeedController extends Controller
         ->rightJoin('merchant','merchant.id','feed.id_merchant')
         ->rightjoin('user','feed.id_user','user.id')
         ->rightJoin('following','feed.id_merchant','following.following') // following merchant
-        ->rightJoin('following_user','feed.id_user','following_user.following')//following user
+        ->rightJoin('following_user','feed.id_user','following_user.following_users')//following user
         ->where('feed.paused','!=','1')
         ->where('product.paused','!=','1');
         
@@ -258,7 +258,7 @@ class FeedController extends Controller
         ->leftJoin('merchant','merchant.id','feed.id_merchant')
         ->leftJoin('user','feed.id_user','user.id')
         ->leftJoin('following','feed.id_merchant','following.following')
-        ->leftJoin('following_user','feed.id_user','following_user.following')
+        ->leftJoin('following_user','feed.id_user','following_user.following_users')
         ->where('feed.paused','!=','1')
         ->where('product.paused','!=','1')
         ->union($merchantFeed)
@@ -319,7 +319,7 @@ class FeedController extends Controller
         ->rightJoin('merchant','merchant.id','feed.id_merchant')
         ->rightjoin('user','feed.id_user','user.id')
         ->rightJoin('following','feed.id_merchant','following.following') // following merchant
-        ->rightJoin('following_user','feed.id_user','following_user.following')//following user
+        ->rightJoin('following_user','feed.id_user','following_user.following_users')//following user
         ->where('feed.paused','!=','1')
         ->where('merchant.id_merchant_category',$id)
         ->where('product.paused','!=','1');
@@ -350,7 +350,7 @@ class FeedController extends Controller
         ->leftJoin('merchant','merchant.id','feed.id_merchant')
         ->leftJoin('user','feed.id_user','user.id')
         ->leftJoin('following','feed.id_merchant','following.following')
-        ->leftJoin('following_user','feed.id_user','following_user.following')
+        ->leftJoin('following_user','feed.id_user','following_user.following_users')
         ->where('feed.paused','!=','1')
         ->where('product.paused','!=','1')
         ->where('merchant.id_merchant_category',$id)
